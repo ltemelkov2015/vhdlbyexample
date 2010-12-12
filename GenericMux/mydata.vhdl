@@ -5,6 +5,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
+
 -------------------------------------------------
 PACKAGE input_array is
     TYPE vector_array IS ARRAY (NATURAL RANGE <>) OF
@@ -12,3 +13,4 @@ PACKAGE input_array is
 END input_array;
 
 ------------------------------------------------
+

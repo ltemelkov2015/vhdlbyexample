@@ -19,10 +19,9 @@ use work.input_array.all;
 
 
 ENTITY mux is 
-   GENERIC(n:INTEGER:=7);
+   GENERIC(n:POSITIVE:=2); --some default that can be overriden in the instance
    
-     PORT(x:   IN    vector_array(0 to n);
-          --sel: IN    STD_LOGIC_VECTOR(n downto 0);
+     PORT(x:   IN    vector_array(0 to 2**n-1);
           sel: IN INTEGER RANGE 0 TO (2**n - 1); 
           y:   OUT   STD_LOGIC_VECTOR(7 DOWNTO 0));
  END mux;
@@ -36,3 +35,4 @@ ENTITY mux is
        y <= x(sel); 
  END dataflow;
  
+
