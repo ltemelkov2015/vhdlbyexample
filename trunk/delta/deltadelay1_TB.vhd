@@ -27,6 +27,7 @@ clock_stimulus: PROCESS
                       input <='1';
                       wait for 100 ns;
                       input <='0';
+                      --input <='1' after 20 ns, '0' after 30 ns;
                       wait; -- wait forever and examnine the wave form
               END PROCESS;
           END delay_TB;
