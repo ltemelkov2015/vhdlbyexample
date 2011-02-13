@@ -25,15 +25,15 @@ BEGIN
 -- Case 2 inertial delay added ---
 -- Note that the NAND evals first and 5 ns later "AND" evals
 -- no spur in this case
---b <= NOT(a);
---c <= NOT( clock AND b)after 10 ns;
---d <= c AND b after 15 ns;
+b <= NOT(a);
+c <= NOT( clock AND b)after 10 ns;
+d <= c AND b after 15 ns;
 
 --Case 3: Let the NANA evals last and AND evalvs first
 -- Note that the glitch showed up again.
-b <= NOT(a);
-c <= NOT( clock AND b)after 15 ns;
-d <= c AND b after 10 ns;
+--b <= NOT(a);
+--c <= NOT( clock AND b)after 15 ns;
+--d <= c AND b after 10 ns;
 
 --Conclusion: How this circuit will behave in real time depends on the delays of AND
 --and NAND gates, but .. what if the inertal delays are the same(different than )
@@ -42,6 +42,8 @@ d <= c AND b after 10 ns;
 -- so the results look the same every time the simulator is run.
 -- the delay we added are not synthesizablke by real FPGA, but they hels us realize what will happen
 -- if we do not understand the boundary between simulator and real circuit.
+-- Also there are different types of delay - transport and inertial.Keep in mind that with different delay types
+--( not times!!!) circuits also behave different. The delay in this example are inertial
 --Imagine we have a D- Flip Flop on the output D. It will trigger on that glitch without us knowing what is going on!  
 
 END test;
