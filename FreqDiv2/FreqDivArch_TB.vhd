@@ -8,37 +8,29 @@ USE ieee.STD_LOGIC_1164.all;
 ------------------------------------------
 
 ENTITY FreqDivider_TB IS
-  GENERIC(n: INTEGER:=1024);
 END FreqDivider_TB;
 
 ---------------------------------------------
 
 ARCHITECTURE FreqDivider_TB OF FreqDivider_TB IS
 ---------------------------------------------
-component FreqDiv 
-  
-  PORT (fclk:   IN  STD_LOGIC;
-        ClkDiv: IN  INTEGER RANGE 0 TO n; 
-        fclk_n: OUT STD_LOGIC);
-END component;
-
+component freq_divider
+PORT ( clk : IN STD_LOGIC;
+        out1, out2 : BUFFER STD_LOGIC);
+ END component;
 ---------------------------------------------
 
-SIGNAL clock_out: STD_LOGIC;
+SIGNAL clock_out1, clock_out2: STD_LOGIC;
 SIGNAL clock:STD_LOGIC:='0';
-SIGNAL Div:INTEGER RANGE 0 to n:=5;
 ---------------------------------------------
 
 BEGIN
-  
-  UUT : FreqDiv PORT MAP(clock,Div,clock_out);
-  
-  clock_gen:PROCESS(clock)
-            BEGIN
-              clock <= not clock after 25 ns;
-            END PROCESS;
-END FreqDivider_TB;
-    
-  
 
-        
+UUT : freq_divider PORT MAP(clock,clock_out1, clock_out2);
+
+clock_gen:PROCESS(clock)
+         BEGIN
+           clock <= not clock after 25 ns;
+         END PROCESS;
+END FreqDivider_TB;
+ 
