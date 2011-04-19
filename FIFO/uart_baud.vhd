@@ -1,18 +1,17 @@
--- this freq divider is from Pedroni book
---added an input divisor signal
+-- this freq divider used for baud rate generator
 
------------------------------------------
+--------------------------------------------------
  LIBRARY ieee;
  USE ieee.std_logic_1164.all;
- -----------------------------------------
+ -------------------------------------------------
  ENTITY freq_divider IS
  GENERIC(n:INTEGER:=1024); --10bit divisor
  PORT ( clk : IN STD_LOGIC;
         Div: IN INTEGER RANGE 0 to n;
         out1, out2 : BUFFER STD_LOGIC:='1');
  END freq_divider;
- -----------------------------------------
- ARCHITECTURE example OF freq_divider IS
+ -------------------------------------------------
+ ARCHITECTURE behav OF freq_divider IS
     SIGNAL count1 : INTEGER RANGE 0 TO n/2;
     BEGIN
       PROCESS (clk)
@@ -31,5 +30,5 @@
  END IF;
  END IF;
  END PROCESS;
- END example;
- -----------------------------------------
+ END behav;
+ -------------------------------------------------
