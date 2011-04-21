@@ -1,5 +1,6 @@
 -- uart_receiver.vhd
--- this is a uart receiver state machine
+-- this is a uart receiver state machine which gets data from the register map and updates data to
+-- the register map declared in uart top module
 -- refer to datasheet 16c1450 UART
 
 
