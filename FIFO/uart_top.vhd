@@ -9,7 +9,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
----------  UART  TOP SIGNALS -----------------------------
+---------  UART  TOP SIGNALS ----------------------------------------------------
 entity uart_top is 
   port(Addr:         IN    std_logic_vector(2 downto 0);
        Data:         INOUT std_logic_vector(7 downto 0);
@@ -22,10 +22,10 @@ entity uart_top is
        RxD:          IN    std_logic;
        Master_Clk:   IN    std_logic); --Nexus2 board uses 50Mhz internal clock
   end uart_top;
-  ---------------------------------------------------------
+  ------------------------------------------------------------------------------
   
   architecture rtl of uart_top is
-  -------- Component/Logic Block/ Declarations -----------
+  -------- Component/Logic Block/ Declarations ---------------------------------
   
   
   
@@ -74,7 +74,14 @@ entity uart_top is
   type TxState is (TxIdle, TxStart, TxData, TxParity, TxStop);
   signal pr_rx_state: RxState:=RxIdle; -- present state of the receiver state machine 
   signal pr_tx_state: TxState:=TxIdle; -- present state of the transmitter state machine
-
+  
+  ---- Aliases for easy accessing registers ---------------------
+  
+  alias RxFlags: std_logic_vector(5 downto 0) is LSR(5 downto 0); 
+  alias TxFlags: std_logic_vector(1 downto 0) is LSR(7 downto 6);
+  
+  ---------------------------------------------------------------
+  
 begin
 t_div <= to_integer(unsigned(DLM(2 downto 0) & DLL)); --std_logic_vector yo integer conversion
 AddressBus <= Addr;
@@ -156,7 +163,5 @@ Baud_Gen: freq_divider generic map(n =>1024) port map( clk=>Master_Clk, -- 50Mhz
                                                        out2=>open);
  -- out1 output has the 16xBaudrate clock now --
  -----------------------------------------------------------------------
- 
- 
  end rtl; 
        
