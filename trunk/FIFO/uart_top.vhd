@@ -62,7 +62,7 @@ entity uart_top is
 
  ----------  uart internal non-addressable registers -------------
  
-  signal RxShiftReceiver      : std_logic_vector(7 downto 0);
+
   signal TxShiftTransmitter   : std_logic_vector(7 downto 0);
   signal AddressBus           : std_logic_vector(2 downto 0);
   signal ClkBaud              : std_logic; 
@@ -77,23 +77,22 @@ entity uart_top is
   
   ---- Aliases for easy accessing registers ---------------------
   
-  alias RxFlags: std_logic_vector(5 downto 0) is LSR(5 downto 0); 
-  alias TxFlags: std_logic_vector(1 downto 0) is LSR(7 downto 6);
+  alias RxFlags: std_logic_vector(5 downto 0) is LSR(5 downto 0);  --this portion is updated by RxStateMachine
+  alias TxFlags: std_logic_vector(1 downto 0) is LSR(7 downto 6);  --this portion is updated by TxStateMachine
   
   ---------------------------------------------------------------
   
 begin
-t_div <= to_integer(unsigned(DLM(2 downto 0) & DLL)); --std_logic_vector yo integer conversion
+t_div <= to_integer(unsigned(DLM(2 downto 0) & DLL)); --std_logic_vector to integer conversion
 AddressBus <= Addr;
 
----- Address Decoder Logic Register Map ------------------------------------------------------
-
+---- Address Decoder Logic Register Map page 10 from data sheet--
   Decoder: process(IOR, IOW, CS, Reset)
     begin
     if(CS='0') then -- put address and Data bus in hiZ
            AddressBus <="ZZZ";
            Data <= (others => 'Z'); 
-    elsif(Reset='1') then  -- init registers and state machines
+    elsif(Reset='1') then  -- init registers and state machines 
            DLL <="XXXXXXXX";
            DLM <="XXXXXXXX";
            RHR <="XXXXXXXX";
