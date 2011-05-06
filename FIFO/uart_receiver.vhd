@@ -26,11 +26,13 @@ end uart_receiver;
          
 architecture rtl of uart_receiver is
 -------- State Machine ----------------------------------------------------------------------------------
-type RxState is (RxIdle, RxStart, RxData, Parity);
+type RxState is (RxIdle, RxStart, RxData, RxParity, RxStop);
 
 
 ------- Aliases -----------------------------------------------------------------------------------------
-alias WordLength: std_logic_vector(1 downto 0) is LCRBitsIn(1 downto 0);  --this portion shows bit count   
+alias n_bits: std_logic_vector(1 downto 0) is LCRBitsIn(1 downto 0);      --this portion shows bit count
+alias parity_bits: std_logic_vector( 1 downto 0) is LCRBitsIn(5 downto 4); 
+   
   
    
 -------- Signal declarations Internal -------------------------------------------------------------------
@@ -41,9 +43,12 @@ constant halfCount: integer:=8;  -- counts till 8  and then strob
 constant fullCount: integer:=16; -- counts till 16 and then strob
 signal   t_RHR: std_logic_vector(9 downto 0);
 signal   ClrShiftData: std_logic;
+signal   num_bits: integer 0 to 8;
 
-
--------- component declaration RX Clock ----------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+-------- component declarations -----------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+-- Rx Clock
 component rxStrobe is
   port( BaudClkIn:      IN STD_LOGIC;
         RxStrobeOut:    OUT STD_LOGIC;
@@ -52,7 +57,7 @@ component rxStrobe is
       );
 end component;
 
--------- component declaration Rx Shift register --------------------------------------------------
+-- Rx Shift register 
 component shift is
   GENERIC(WIDTH: positive);
    port(C, SI, Clear : in std_logic;
@@ -60,8 +65,16 @@ component shift is
 end component;
 
 
+--RxTxWordLength
+component WordLength is
+     port(WordIn:     in  std_logic_vector(1 downto 0);
+          WordLength: out integer range 0 to 8
+         );
+end component;
 
----------------------------------------------------------------------------------------------------
+------
+------
+------
 begin
 
 ---------------------------------------------------------------------------------------------------
@@ -79,6 +92,11 @@ RxShift_Reg: shift Generic Map(WIDTH =>9) port map(C=>Rx_Data_Strob,
                                                    SI=>RxD,
                                                    Clear=>ClrShiftData,
                                                    PO=>t_RHR);
+                                                   
+ 
+                                                   
+RxTxBitLength: WordLength port map(WordIn =>n_bits, WordLength =>num_bits);  
+                                                  
 
 -------------- Set initial state on reset ------------------------------------------------------
 Rx_State_Machine: 
@@ -92,19 +110,25 @@ Rx_State_Machine:
         elsif(RxD'event and RxD='0') and RxPr_State=RxIdle then
            ClrRxStrobeCounter <='0';      -- start strob counter
            strobCounter <= halfCount;     -- count to 8
-           ClrShiftData <='0';            -- Rx ShiftReg ready
+           ClrShiftData <='0';            -- Rx ShiftReg ready to count
            bitCount:=0;
         elsif(Rx_Data_Strob'event and Rx_Data_Strob='1')then
            case RxPr_State is
              when RxIdle =>
-                strobCounter <= fullCount;
+                strobCounter <= fullCount; -- program counter to 16
                 RxPr_State <= RxStart;
              when RxStart =>
                 bitCount:=bitCount+1;
-                if(bitCount=WordLength) then
-                   RxPr_State <=Parity;
+                if(bitCount=num_bits) then -- choose next state after abl bits are in
+                    if(LCRBitsIn(3)='0) then Rx_PrState <=RxStop;  -- no parity, goto RxStop state
+                    else RxPr_State <=RxParity;
+                    end if;
+                else RxPrState <= RxStart; -- loop in the same state till all bits are shifted in
                 end if;
-             when Parity =>
+             when RxParity => 
+                RxPrState <= RxStop;
+             when RxStop =>
+              
                    
                 
                 
