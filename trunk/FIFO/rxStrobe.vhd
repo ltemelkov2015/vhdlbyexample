@@ -18,7 +18,7 @@ entity rxStrobe is
 end rxStrobe;
 
 architecture rtl of rxStrobe is
-signal cntr: integer range 0 to 8;
+
 begin
 ---------  simple counter to 7 with asynch reset --------------------
 RxStrobe:  process(BaudClkIn, Reset) 
@@ -35,7 +35,7 @@ RxStrobe:  process(BaudClkIn, Reset)
                     else RxStrobeOut <='0';
                     end if;
                  end if;
-                 cntr <= t_cnt;
+                 
             end process;
 ---------------------------------------------------------------------
 

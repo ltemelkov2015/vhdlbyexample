@@ -1,4 +1,4 @@
--- one_to 2bitstopbits
+-- stopbits
 -- it converts one bit into two bits data integer stop bits
 library ieee;
 use ieee.std_logic_1164.all;
