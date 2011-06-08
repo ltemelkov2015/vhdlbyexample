@@ -2,7 +2,7 @@
 -- the signals ports are taken exactly the same as a regular FIFO structure ST16C1450 for instance
 -- this module is designed specially for NEXUS2 SPARTAN 3E board from digilent
 -- author: Lachezar Temelkov
--- rev 1.0 04/15/20011 Initial rev.
+-- rev 1.0 04/15/20011 Initial rev.    -> Features - No FIFO Buffer
 
 
 library ieee;
@@ -39,7 +39,26 @@ entity uart_top is
            Div: IN INTEGER RANGE 0 to n;
            out1, out2 : BUFFER STD_LOGIC:='1');
     end component;
-  ---------------------------------------------------------
+    
+  -----  UART RECEIVER component ---------------------------------------------------------------
+  --@input:   reset: internal reset to the module
+  --@Output:  RHRData: receive holding byte. 
+  --@Input:   BaudRateClk16X: 16X BaudRate  clock
+  --@Output:  RxLSR: Line Status Register
+  component uart_receiver is
+   port( RxReset:         in  std_logic;
+         RxD:             in  std_logic;
+         BaudRateClk16X:  in  std_logic;
+         RHRData:         out std_logic_vector(7 downto 0); --Rx shift register data on internal bus to RHR
+         RxLSR:           out std_logic_vector(4 downto 0); --RxFlags are updated  p.11 datasheet
+         LCRBitsIn:       in  std_logic_vector(5 downto 0) --lcr bits concerning the receiver state machine
+         );
+end component;
+  
+  
+  
+  
+  
   
   
   
@@ -67,14 +86,7 @@ entity uart_top is
   signal AddressBus           : std_logic_vector(2 downto 0);
   signal ClkBaud              : std_logic; 
   signal t_div                : integer range 0 to 1024; --temporary divisor
-    
------------ Receiver/Transmitter state machine -----------------------------------------------
-
-  type RxState is (RxIdle, RxStart, RxData, Parity, RxStop);
-  type TxState is (TxIdle, TxStart, TxData, TxParity, TxStop);
-  signal pr_rx_state: RxState:=RxIdle; -- present state of the receiver state machine 
-  signal pr_tx_state: TxState:=TxIdle; -- present state of the transmitter state machine
-  
+     
   ---- Aliases for easy accessing registers ---------------------
   
   alias RxFlags: std_logic_vector(5 downto 0) is LSR(5 downto 0);  --this portion is updated by RxStateMachine
@@ -106,10 +118,9 @@ AddressBus <= Addr;
            SPR <=X"FF";
            TxShiftTransmitter(7)<='1';
            INT <= 'Z';
-           pr_rx_state <= RxIdle;
-           pr_tx_state <= TxIdle;
            
-      elsif(IOR'event and IOR='1') then
+           
+      elsif(IOR='1') then
            if(AddressBus = "011") then Data <= LCR;
            elsif LCR(7)='0' then
              case AddressBus is
@@ -129,7 +140,7 @@ AddressBus <= Addr;
                when others => Data <=X"FF"; --this should not happen
               end case;
           end if;
-      elsif(IOW'event and IOW='0') then
+      elsif(IOW='0') then
           Data <= (others => 'Z');   --hiZ Impedance for DataBus transmit
           if AddressBus = "011" then LCR <=Data; 
           elsif LCR(7)='0' then 
