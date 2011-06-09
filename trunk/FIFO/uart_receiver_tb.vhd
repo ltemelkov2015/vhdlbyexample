@@ -13,8 +13,9 @@ architecture tb of uart_receiver_tb is
          RxD:             in  std_logic;
          BaudRateClk16X:  in  std_logic;
          RHRData:         out std_logic_vector(7 downto 0); --Rx shift register data on internal bus to RHR
-         t_LSR:    out std_logic_vector(4 downto 0); --RxFlags are updated  p.11 datasheet
-         LCRBitsIn:       in  std_logic_vector(5 downto 0) --lcr bits concerning the receiver state machine
+         t_LSR:           out std_logic_vector(4 downto 0); --RxFlags are updated  p.11 datasheet
+         LCRBitsIn:       in  std_logic_vector(5 downto 0); --lcr bits concerning the receiver state machine
+         data_ready:      out std_logic
          );
 end component;
 
@@ -26,6 +27,8 @@ signal XBaud: std_logic:='1';
 signal RHR: std_logic_vector(7 downto 0);
 signal LSR: std_logic_vector(4 downto 0);
 signal LCR: std_logic_vector(5 downto 0):="011011";
+signal data_ready_strob: std_logic;
+
 
 begin
 
@@ -34,7 +37,8 @@ UUT: uart_receiver port map( RxReset => rst,
                              BaudRateClk16X =>XBaud,
                              RHRData=>RHR,
                              t_LSR=>LSR,
-                             LCRBitsIn=>LCR
+                             LCRBitsIn=>LCR,
+                             data_ready => data_ready_strob
                             );
                             
                             
@@ -50,7 +54,7 @@ process
 end process reset;
 
 
-data:
+data_eight:
 process
   begin
 serial_in <='1';
@@ -82,6 +86,10 @@ wait for 520 ns;
 serial_in <='0' ; --start bit again
 wait;
 end process data;
+
+
+
+
 
 end tb;
  

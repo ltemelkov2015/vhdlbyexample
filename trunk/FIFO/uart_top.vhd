@@ -5,6 +5,7 @@
 -- rev 1.0 04/15/20011 Initial rev.    -> Features - No FIFO Buffer
 
 
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -45,14 +46,14 @@ entity uart_top is
   --@Output:  RHRData: receive holding byte. 
   --@Input:   BaudRateClk16X: 16X BaudRate  clock
   --@Output:  RxLSR: Line Status Register
-  component uart_receiver is
+component uart_receiver is
    port( RxReset:         in  std_logic;
          RxD:             in  std_logic;
          BaudRateClk16X:  in  std_logic;
          RHRData:         out std_logic_vector(7 downto 0); --Rx shift register data on internal bus to RHR
-         RxLSR:           out std_logic_vector(4 downto 0); --RxFlags are updated  p.11 datasheet
-         LCRBitsIn:       in  std_logic_vector(5 downto 0) --lcr bits concerning the receiver state machine
-         );
+         t_LSR:           out std_logic_vector(4 downto 0); --RxFlags are updated  p.11 datasheet
+         LCRBitsIn:       in  std_logic_vector(5 downto 0); --lcr bits concerning the receiver state machine
+         data_ready:      out std_logic);
 end component;
   
   
@@ -86,6 +87,7 @@ end component;
   signal AddressBus           : std_logic_vector(2 downto 0);
   signal ClkBaud              : std_logic; 
   signal t_div                : integer range 0 to 1024; --temporary divisor
+  signal RxDataReady:         :std_logic;
      
   ---- Aliases for easy accessing registers ---------------------
   
@@ -173,5 +175,13 @@ Baud_Gen: freq_divider generic map(n =>1024) port map( clk=>Master_Clk, -- 50Mhz
                                                        out2=>open);
  -- out1 output has the 16xBaudrate clock now --
  -----------------------------------------------------------------------
- end rtl; 
+uart_receiver: uart_receiver port map(
+                                      RxReset          => Reset,
+                                      RxD              => RxD,
+                                      BaudRateClk16X   => ClkBaud,
+                                      RHRData          =>
+                                      t_LSR            =>
+                                      LCRBitsIn        =>
+                                      data_ready       =>
+                                      );
        

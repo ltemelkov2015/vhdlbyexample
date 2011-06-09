@@ -6,7 +6,7 @@
 --    0        1       6
 --    1        0       7
 --    1        1       8
-
+-- ignore this module for the current build
 
 
 library ieee;

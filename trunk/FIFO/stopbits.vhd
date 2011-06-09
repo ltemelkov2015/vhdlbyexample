@@ -1,5 +1,6 @@
 -- stopbits
 -- it converts one bit into two bits data integer stop bits
+-- ignore this module for the current build!
 library ieee;
 use ieee.std_logic_1164.all;
 
