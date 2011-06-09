@@ -1,0 +1,4 @@
+-- tested :
+1. data bits 8 receive
+2. LSR bits updated properly frame error, parity error.LSR(0) not tested
+3. test 5 bit receiving
