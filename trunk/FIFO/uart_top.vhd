@@ -87,7 +87,7 @@ end component;
   signal AddressBus           : std_logic_vector(2 downto 0);
   signal ClkBaud              : std_logic; 
   signal t_div                : integer range 0 to 1024; --temporary divisor
-  signal RxDataReady:         :std_logic;
+  signal RxDataReady          : std_logic;
      
   ---- Aliases for easy accessing registers ---------------------
   
@@ -174,14 +174,14 @@ Baud_Gen: freq_divider generic map(n =>1024) port map( clk=>Master_Clk, -- 50Mhz
                                                        out1=>ClkBaud,
                                                        out2=>open);
  -- out1 output has the 16xBaudrate clock now --
- -----------------------------------------------------------------------
-uart_receiver: uart_receiver port map(
+ ------------------------------------------------------------------------
+uart_rx: uart_receiver port map(
                                       RxReset          => Reset,
                                       RxD              => RxD,
                                       BaudRateClk16X   => ClkBaud,
-                                      RHRData          =>
-                                      t_LSR            =>
-                                      LCRBitsIn        =>
-                                      data_ready       =>
+                                      RHRData          => Data,
+                                      t_LSR            => LSR(4 downto 0),
+                                      LCRBitsIn        => LCR(5 downto 0),
+                                      data_ready       => RxDataReady
                                       );
-       
+end rtl;
