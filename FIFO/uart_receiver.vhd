@@ -2,6 +2,9 @@
 -- this is a uart receiver state machine which gets data from the register map and updates data to
 -- the register map declared in uart top module
 -- refer to datasheet 16c1450 UART
+-- This receiver design has a disadvantage because, it creates another clock domain RX_DATA_STROB
+-- This would create synch problems. We have to try to have only one clock, and everything else
+-- should be enable signal in combinatorial circuit
 -- Author: Lachezar Temelkov 05/05/2011
 
 
