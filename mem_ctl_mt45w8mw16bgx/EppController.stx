@@ -1,29 +1,29 @@
 Release 12.3 - xst M.70d (nt)
 Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
---> Parameter TMPDIR set to C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/xst/projnav.tmp
+--> Parameter TMPDIR set to C:/Nexus2memControl/xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.84 secs
+Total CPU time to Xst completion: 0.19 secs
  
---> Parameter xsthdpdir set to C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/xst
+--> Parameter xsthdpdir set to C:/Nexus2memControl/xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.84 secs
+Total CPU time to Xst completion: 0.19 secs
  
 --> WARNING:Xst:3164 - Option "-debug" found multiple times in the command line. Only the first occurence is considered.
 
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling vhdl file "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppController.vhd" in Library work.
+Compiling vhdl file "C:/Nexus2memControl/EppController.vhd" in Library work.
 Entity <eppcontroller> compiled.
 Entity <eppcontroller> (Architecture <behavioral>) compiled.
 
 
-Total REAL time to Xst completion: 1.00 secs
-Total CPU time to Xst completion: 1.63 secs
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.27 secs
  
 --> 
 

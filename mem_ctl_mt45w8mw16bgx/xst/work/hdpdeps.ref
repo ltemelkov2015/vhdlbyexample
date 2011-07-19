@@ -1,4 +1,4 @@
-V3 21
+V3 22
 FL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/debounce.vhd" 2011/07/10.01:19:39 M.70d
 EN work/debounce 1310930531 \
       FL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/debounce.vhd" \
@@ -17,12 +17,6 @@ AR work/dff_en/Behavioral 1310555881 \
       FL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/dff_en.vhd" \
       EN work/dff_en 1310555880
 FL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppController.vhd" 2011/07/19.01:26:48 M.70d
-EN work/EppController 1311028046 \
-      FL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppController.vhd" \
-      PB ieee/std_logic_1164 1284609568 PB ieee/NUMERIC_STD 1284609569
-AR work/EppController/Behavioral 1311028047 \
-      FL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppController.vhd" \
-      EN work/EppController 1311028046
 FL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppCtrl.vhd" 2011/07/17.22:21:58 M.70d
 AR work/EppCtrl/arch 1310646764 \
       FL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppCtrl.vhd" \
@@ -49,3 +43,8 @@ AR work/ram_ctrl_test/Behavioral 1310930535 \
       FL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd" \
       EN work/ram_ctrl_test 1310930534 AR work/mem_ctl_mt45w8mw16/arch 1310930530 \
       AR work/debounce/fsmd_arch 1310930533
+FL C:/Nexus2memControl/EppController.vhd 2011/07/19.19:25:52 M.70d
+EN work/EppController 1311092780 FL C:/Nexus2memControl/EppController.vhd \
+      PB ieee/std_logic_1164 1284609568 PB ieee/NUMERIC_STD 1284609569
+AR work/EppController/Behavioral 1311092781 \
+      FL C:/Nexus2memControl/EppController.vhd EN work/EppController 1311092780

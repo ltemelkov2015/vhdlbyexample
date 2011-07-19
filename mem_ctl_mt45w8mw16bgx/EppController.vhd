@@ -25,6 +25,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
 
+
+
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
 --library UNISIM;
@@ -87,6 +89,10 @@ ctrlWriteStb <=pwr;
 ctrlDataWriteTick<=ctrlDataWr_reg;
 pwait<= pwait_reg;
 ctrlReady<=Ready;
+AddressBusOut<="0000" & Adr_reg;
+DataBusOut<=busEppIn;
+
+
 
 -- inout bus control
 busEppIn <= pdb;

@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2011-07-18T19:20:12</DateModified>
+  <DateModified>2011-07-19T16:40:07</DateModified>
   <ModuleName>ram_ctrl_test</ModuleName>
   <SummaryTimeStamp>2011-07-12T12:50:17</SummaryTimeStamp>
-  <SavedFilePath>C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/ram_ctrl_test.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>C:/Documents and Settings/mem_ctl_mt45w8mw16bgx\</ImplementationReportsDirectory>
+  <SavedFilePath>C:/Nexus2memControl/iseconfig/ram_ctrl_test.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>C:/Nexus2memControl\</ImplementationReportsDirectory>
   <DateInitialized>2011-07-10T14:16:07</DateInitialized>
   <EnableMessageFiltering>true</EnableMessageFiltering>
  </header>

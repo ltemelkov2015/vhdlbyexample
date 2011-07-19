@@ -1,5 +1,5 @@
 EN dff_en NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/dff_en.vhd" sub00/vhpl09 1310555880
-EN eppcontroller NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppController.vhd" sub00/vhpl15 1311028046
+EN eppcontroller NULL C:/Nexus2memControl/EppController.vhd sub00/vhpl15 1311092780
 AR sram_ctrl arch "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.vhd" sub00/vhpl02 1310162518
 AR dff_en behavioral "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/dff_en.vhd" sub00/vhpl10 1310555881
 EN sram_ctrl NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.vhd" sub00/vhpl01 1310162517
@@ -9,7 +9,7 @@ EN mem_ctl_mt45w8mw16 NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_
 AR mem_ctl_mt45w8mw16 arch "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.vhd" sub00/vhpl03 1310930530
 EN eppctrl NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppCtrl.vhd" sub00/vhpl11 1310646763
 AR debounce exp_fsmd_arch "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/debounce.vhd" sub00/vhpl05 1310930532
-AR eppcontroller behavioral "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppController.vhd" sub00/vhpl16 1311028047
+AR eppcontroller behavioral C:/Nexus2memControl/EppController.vhd sub00/vhpl16 1311092781
 AR eppctrl arch "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppCtrl.vhd" sub00/vhpl12 1310646764
 EN ram_ctrl_test NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd" sub00/vhpl07 1310930534
 EN dpimref NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppCtrl.vhd" sub00/vhpl13 1310930542
