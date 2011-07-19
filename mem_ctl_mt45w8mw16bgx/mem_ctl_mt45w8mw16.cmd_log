@@ -1,0 +1,3 @@
+xst -intstyle ise -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.syr" 
+xst -intstyle ise -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.syr" 
+xst -intstyle ise -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.syr" 

@@ -1,0 +1,30 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer:       Lachezar Temelkov       
+-- 
+-- Create Date:    17:49:32 07/08/2011 
+-- Design Name: 
+-- Module Name:    mem_ctl_mt45w8mw16 - Behavioral 
+-- Project Name:   SRAM memory controller for MT458MW16BGX memory
+-- Target Devices: Nexus2, SPARTAN 3E, MT458MW16BGX
+-- Tool versions:  XILINX ISE 12.3
+-- Description:    This component describes an asynchronous memory controller
+--                 to CellularRAM MT458MW16BGX found in Nexus2 DK from Digilent
+--                 This design uses a single clock, hence it is safe but not optimized.
+--                 Optimized design can be achieved using the DCM feature of SPARTAN 3E FPGA
+-- Dependencies: 
+--
+-- Revision: 
+-- Revision 0.01 - File Created
+-- Additional Comments: 
+--
+----------------------------------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+ 
+entity mem_ctl_mt45w8mw16 is

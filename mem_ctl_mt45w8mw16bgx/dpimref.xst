@@ -1,0 +1,5 @@
+set -tmpdir "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/xst/projnav.tmp"
+set -xsthdpdir "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/xst"
+elaborate
+-ifn dpimref.prj
+-ifmt mixed

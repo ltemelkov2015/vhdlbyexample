@@ -1,0 +1,53 @@
+xst -intstyle ise -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -i -p xc3s500e-fg320-5 "ram_ctrl_test.ngc" ram_ctrl_test.ngd  
+xst -intstyle ise -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+xst -intstyle ise -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+xst -intstyle ise -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc ram_ctrl_test.ucf -p xc3s500e-fg320-5 "ram_ctrl_test.ngc" ram_ctrl_test.ngd  
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc ram_ctrl_test.ucf -p xc3s500e-fg320-5 "ram_ctrl_test.ngc" ram_ctrl_test.ngd  
+map -filter "iseconfig/filter.filter" -intstyle ise -p xc3s500e-fg320-5 -cm area -ir off -pr off -c 100 -o ram_ctrl_test_map.ncd ram_ctrl_test.ngd ram_ctrl_test.pcf 
+par -filter "iseconfig/filter.filter" -w -intstyle ise -ol high -t 1 ram_ctrl_test_map.ncd ram_ctrl_test.ncd ram_ctrl_test.pcf 
+trce -filter {C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter} -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml ram_ctrl_test.twx ram_ctrl_test.ncd -o ram_ctrl_test.twr ram_ctrl_test.pcf -ucf ram_ctrl_test.ucf 
+xst -intstyle ise -filter "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter" -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc ram_ctrl_test.ucf -p xc3s500e-fg320-5 "ram_ctrl_test.ngc" ram_ctrl_test.ngd  
+map -filter "iseconfig/filter.filter" -intstyle ise -p xc3s500e-fg320-5 -cm area -ir off -pr off -c 100 -o ram_ctrl_test_map.ncd ram_ctrl_test.ngd ram_ctrl_test.pcf 
+par -filter "iseconfig/filter.filter" -w -intstyle ise -ol high -t 1 ram_ctrl_test_map.ncd ram_ctrl_test.ncd ram_ctrl_test.pcf 
+trce -filter {C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter} -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml ram_ctrl_test.twx ram_ctrl_test.ncd -o ram_ctrl_test.twr ram_ctrl_test.pcf -ucf ram_ctrl_test.ucf 
+xst -intstyle ise -filter "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter" -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc ram_ctrl_test.ucf -p xc3s500e-fg320-5 "ram_ctrl_test.ngc" ram_ctrl_test.ngd  
+map -filter "iseconfig/filter.filter" -intstyle ise -p xc3s500e-fg320-5 -cm area -ir off -pr off -c 100 -o ram_ctrl_test_map.ncd ram_ctrl_test.ngd ram_ctrl_test.pcf 
+par -filter "iseconfig/filter.filter" -w -intstyle ise -ol high -t 1 ram_ctrl_test_map.ncd ram_ctrl_test.ncd ram_ctrl_test.pcf 
+trce -filter {C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter} -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml ram_ctrl_test.twx ram_ctrl_test.ncd -o ram_ctrl_test.twr ram_ctrl_test.pcf -ucf ram_ctrl_test.ucf 
+bitgen -filter "iseconfig/filter.filter" -intstyle ise -f ram_ctrl_test.ut ram_ctrl_test.ncd 
+xst -intstyle ise -filter "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter" -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+xst -intstyle ise -filter "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter" -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc ram_ctrl_test.ucf -p xc3s500e-fg320-5 "ram_ctrl_test.ngc" ram_ctrl_test.ngd  
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc ram_ctrl_test.ucf -p xc3s500e-fg320-5 "ram_ctrl_test.ngc" ram_ctrl_test.ngd  
+map -filter "iseconfig/filter.filter" -intstyle ise -p xc3s500e-fg320-5 -cm area -ir off -pr off -c 100 -o ram_ctrl_test_map.ncd ram_ctrl_test.ngd ram_ctrl_test.pcf 
+par -filter "iseconfig/filter.filter" -w -intstyle ise -ol high -t 1 ram_ctrl_test_map.ncd ram_ctrl_test.ncd ram_ctrl_test.pcf 
+trce -filter {C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter} -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml ram_ctrl_test.twx ram_ctrl_test.ncd -o ram_ctrl_test.twr ram_ctrl_test.pcf -ucf ram_ctrl_test.ucf 
+bitgen -filter "iseconfig/filter.filter" -intstyle ise -f ram_ctrl_test.ut ram_ctrl_test.ncd 
+xst -intstyle ise -filter "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter" -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+xst -intstyle ise -filter "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter" -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc ram_ctrl_test.ucf -p xc3s500e-fg320-5 "ram_ctrl_test.ngc" ram_ctrl_test.ngd  
+map -filter "iseconfig/filter.filter" -intstyle ise -p xc3s500e-fg320-5 -cm area -ir off -pr off -c 100 -o ram_ctrl_test_map.ncd ram_ctrl_test.ngd ram_ctrl_test.pcf 
+par -filter "iseconfig/filter.filter" -w -intstyle ise -ol high -t 1 ram_ctrl_test_map.ncd ram_ctrl_test.ncd ram_ctrl_test.pcf 
+trce -filter {C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter} -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml ram_ctrl_test.twx ram_ctrl_test.ncd -o ram_ctrl_test.twr ram_ctrl_test.pcf -ucf ram_ctrl_test.ucf 
+xst -intstyle ise -filter "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter" -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc ram_ctrl_test.ucf -p xc3s500e-fg320-5 "ram_ctrl_test.ngc" ram_ctrl_test.ngd  
+map -filter "iseconfig/filter.filter" -intstyle ise -p xc3s500e-fg320-5 -cm area -ir off -pr off -c 100 -o ram_ctrl_test_map.ncd ram_ctrl_test.ngd ram_ctrl_test.pcf 
+par -filter "iseconfig/filter.filter" -w -intstyle ise -ol high -t 1 ram_ctrl_test_map.ncd ram_ctrl_test.ncd ram_ctrl_test.pcf 
+trce -filter {C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter} -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml ram_ctrl_test.twx ram_ctrl_test.ncd -o ram_ctrl_test.twr ram_ctrl_test.pcf -ucf ram_ctrl_test.ucf 
+bitgen -filter "iseconfig/filter.filter" -intstyle ise -f ram_ctrl_test.ut ram_ctrl_test.ncd 
+xst -intstyle ise -filter "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter" -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc ram_ctrl_test.ucf -p xc3s500e-fg320-5 "ram_ctrl_test.ngc" ram_ctrl_test.ngd  
+map -filter "iseconfig/filter.filter" -intstyle ise -p xc3s500e-fg320-5 -cm area -ir off -pr off -c 100 -o ram_ctrl_test_map.ncd ram_ctrl_test.ngd ram_ctrl_test.pcf 
+par -filter "iseconfig/filter.filter" -w -intstyle ise -ol high -t 1 ram_ctrl_test_map.ncd ram_ctrl_test.ncd ram_ctrl_test.pcf 
+trce -filter {C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter} -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml ram_ctrl_test.twx ram_ctrl_test.ncd -o ram_ctrl_test.twr ram_ctrl_test.pcf -ucf ram_ctrl_test.ucf 
+bitgen -filter "iseconfig/filter.filter" -intstyle ise -f ram_ctrl_test.ut ram_ctrl_test.ncd 
+xst -intstyle ise -filter "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter" -ifn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.xst" -ofn "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.syr" 
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc ram_ctrl_test.ucf -p xc3s500e-fg320-5 "ram_ctrl_test.ngc" ram_ctrl_test.ngd  
+map -filter "iseconfig/filter.filter" -intstyle ise -p xc3s500e-fg320-5 -cm area -ir off -pr off -c 100 -o ram_ctrl_test_map.ncd ram_ctrl_test.ngd ram_ctrl_test.pcf 
+par -filter "iseconfig/filter.filter" -w -intstyle ise -ol high -t 1 ram_ctrl_test_map.ncd ram_ctrl_test.ncd ram_ctrl_test.pcf 
+trce -filter {C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/iseconfig/filter.filter} -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml ram_ctrl_test.twx ram_ctrl_test.ncd -o ram_ctrl_test.twr ram_ctrl_test.pcf -ucf ram_ctrl_test.ucf 
+bitgen -filter "iseconfig/filter.filter" -intstyle ise -f ram_ctrl_test.ut ram_ctrl_test.ncd 

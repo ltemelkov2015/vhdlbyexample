@@ -1,0 +1,577 @@
+Release 12.3 - xst M.70d (nt)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.19 secs
+ 
+--> Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.19 secs
+ 
+--> Reading design: ram_ctrl_test.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "ram_ctrl_test.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "ram_ctrl_test"
+Output Format                      : NGC
+Target Device                      : xc3s500e-5-fg320
+
+---- Source Options
+Top Module Name                    : ram_ctrl_test
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : Yes
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 24
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Yes
+Use Synchronous Set                : Yes
+Use Synchronous Reset              : Yes
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.vhd" in Library work.
+Architecture arch of Entity mem_ctl_mt45w8mw16 is up to date.
+Compiling vhdl file "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/debounce.vhd" in Library work.
+Architecture exp_fsmd_arch of Entity debounce is up to date.
+Architecture fsmd_arch of Entity debounce is up to date.
+Compiling vhdl file "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd" in Library work.
+Architecture behavioral of Entity ram_ctrl_test is up to date.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <ram_ctrl_test> in library <work> (architecture <behavioral>).
+
+Analyzing hierarchy for entity <mem_ctl_mt45w8mw16> in library <work> (architecture <arch>).
+
+Analyzing hierarchy for entity <debounce> in library <work> (architecture <fsmd_arch>).
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <ram_ctrl_test> in library <work> (Architecture <behavioral>).
+WARNING:Xst:753 - "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd" line 54: Unconnected output port 'ready' of component 'mem_ctl_mt45w8mw16'.
+WARNING:Xst:753 - "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd" line 54: Unconnected output port 'data_s2f_ur' of component 'mem_ctl_mt45w8mw16'.
+WARNING:Xst:753 - "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd" line 80: Unconnected output port 'db_level' of component 'debounce'.
+WARNING:Xst:753 - "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd" line 89: Unconnected output port 'db_level' of component 'debounce'.
+WARNING:Xst:753 - "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd" line 98: Unconnected output port 'db_level' of component 'debounce'.
+WARNING:Xst:753 - "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd" line 109: Unconnected output port 'db_level' of component 'debounce'.
+Entity <ram_ctrl_test> analyzed. Unit <ram_ctrl_test> generated.
+
+Analyzing Entity <mem_ctl_mt45w8mw16> in library <work> (Architecture <arch>).
+WARNING:Xst:819 - "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.vhd" line 150: One or more signals are missing in the process sensitivity list. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
+   <lb_reg>, <ub_reg>, <lb_en>, <ub_en>
+Entity <mem_ctl_mt45w8mw16> analyzed. Unit <mem_ctl_mt45w8mw16> generated.
+
+Analyzing Entity <debounce> in library <work> (Architecture <fsmd_arch>).
+Entity <debounce> analyzed. Unit <debounce> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <mem_ctl_mt45w8mw16>.
+    Related source file is "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w8mw16.vhd".
+    Found finite state machine <FSM_0> for signal <state_reg>.
+    -----------------------------------------------------------------------
+    | States             | 9                                              |
+    | Transitions        | 11                                             |
+    | Inputs             | 2                                              |
+    | Outputs            | 16                                             |
+    | Clock              | clk                       (rising_edge)        |
+    | Reset              | reset                     (positive)           |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | idle                                           |
+    | Power Up State     | idle                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 16-bit tristate buffer for signal <dio>.
+    Found 23-bit register for signal <addr_reg>.
+    Found 1-bit register for signal <adv_reg>.
+    Found 16-bit register for signal <data_f2s_reg>.
+    Found 16-bit register for signal <data_s2f_reg>.
+    Found 1-bit register for signal <lb_reg>.
+    Found 1-bit register for signal <oe_reg>.
+    Found 1-bit register for signal <tri_reg>.
+    Found 1-bit register for signal <ub_reg>.
+    Found 1-bit register for signal <we_reg>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  61 D-type flip-flop(s).
+	inferred  16 Tristate(s).
+Unit <mem_ctl_mt45w8mw16> synthesized.
+
+
+Synthesizing Unit <debounce>.
+    Related source file is "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/debounce.vhd".
+    Found finite state machine <FSM_1> for signal <state_reg>.
+    -----------------------------------------------------------------------
+    | States             | 4                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 2                                              |
+    | Outputs            | 5                                              |
+    | Clock              | clk                       (rising_edge)        |
+    | Reset              | reset                     (positive)           |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | zero                                           |
+    | Power Up State     | zero                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 21-bit subtractor for signal <q_next$share0000> created at line 128.
+    Found 21-bit register for signal <q_reg>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  21 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+Unit <debounce> synthesized.
+
+
+Synthesizing Unit <ram_ctrl_test>.
+    Related source file is "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd".
+WARNING:Xst:646 - Signal <data_s2f<15:8>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+    Found 16-bit register for signal <data_reg>.
+    Summary:
+	inferred  16 D-type flip-flop(s).
+Unit <ram_ctrl_test> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 4
+ 21-bit subtractor                                     : 4
+# Registers                                            : 14
+ 1-bit register                                        : 6
+ 16-bit register                                       : 3
+ 21-bit register                                       : 4
+ 23-bit register                                       : 1
+# Tristates                                            : 1
+ 16-bit tristate buffer                                : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_1> for best encoding.
+Optimizing FSM <debounce_unit0/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+Optimizing FSM <debounce_unit1/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+Optimizing FSM <debounce_unit2/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+Optimizing FSM <debounce_unit3/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ zero  | 00
+ wait0 | 10
+ one   | 11
+ wait1 | 01
+-------------------
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <ctrl_unit/state_reg/FSM> on signal <state_reg[1:9]> with one-hot encoding.
+--------------------
+ State | Encoding
+--------------------
+ idle  | 000000001
+ rd1   | 000000100
+ rd2   | 000001000
+ rd3   | 000010000
+ rd4   | 000100000
+ wr1   | 000000010
+ wr2   | 001000000
+ wr3   | 010000000
+ wr4   | 100000000
+--------------------
+WARNING:Xst:1710 - FF/Latch <addr_reg_22> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_21> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_20> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_19> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_18> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_17> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_16> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_15> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_14> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_13> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_12> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <data_f2s_reg_8> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <data_f2s_reg_9> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <data_f2s_reg_10> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <data_f2s_reg_11> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <data_f2s_reg_12> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <data_f2s_reg_13> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <data_f2s_reg_14> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <data_f2s_reg_15> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_8> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_9> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_10> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <addr_reg_11> (without init value) has a constant value of 0 in block <ctrl_unit>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <data_reg_8> (without init value) has a constant value of 0 in block <ram_ctrl_test>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <data_reg_9> (without init value) has a constant value of 0 in block <ram_ctrl_test>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <data_reg_10> (without init value) has a constant value of 0 in block <ram_ctrl_test>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <data_reg_11> (without init value) has a constant value of 0 in block <ram_ctrl_test>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <data_reg_12> (without init value) has a constant value of 0 in block <ram_ctrl_test>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <data_reg_13> (without init value) has a constant value of 0 in block <ram_ctrl_test>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <data_reg_14> (without init value) has a constant value of 0 in block <ram_ctrl_test>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <data_reg_15> (without init value) has a constant value of 0 in block <ram_ctrl_test>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:2677 - Node <data_s2f_reg_8> of sequential type is unconnected in block <ctrl_unit>.
+WARNING:Xst:2677 - Node <data_s2f_reg_9> of sequential type is unconnected in block <ctrl_unit>.
+WARNING:Xst:2677 - Node <data_s2f_reg_10> of sequential type is unconnected in block <ctrl_unit>.
+WARNING:Xst:2677 - Node <data_s2f_reg_11> of sequential type is unconnected in block <ctrl_unit>.
+WARNING:Xst:2677 - Node <data_s2f_reg_12> of sequential type is unconnected in block <ctrl_unit>.
+WARNING:Xst:2677 - Node <data_s2f_reg_13> of sequential type is unconnected in block <ctrl_unit>.
+WARNING:Xst:2677 - Node <data_s2f_reg_14> of sequential type is unconnected in block <ctrl_unit>.
+WARNING:Xst:2677 - Node <data_s2f_reg_15> of sequential type is unconnected in block <ctrl_unit>.
+WARNING:Xst:2404 -  FFs/Latches <data_reg<15:8>> (without init value) have a constant value of 0 in block <ram_ctrl_test>.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 2
+# Adders/Subtractors                                   : 4
+ 21-bit subtractor                                     : 4
+# Registers                                            : 153
+ Flip-Flops                                            : 153
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+INFO:Xst:2261 - The FF/Latch <data_f2s_reg_8> in Unit <mem_ctl_mt45w8mw16> is equivalent to the following 7 FFs/Latches, which will be removed : <data_f2s_reg_9> <data_f2s_reg_10> <data_f2s_reg_11> <data_f2s_reg_12> <data_f2s_reg_13> <data_f2s_reg_14> <data_f2s_reg_15> 
+INFO:Xst:2261 - The FF/Latch <addr_reg_8> in Unit <mem_ctl_mt45w8mw16> is equivalent to the following 14 FFs/Latches, which will be removed : <addr_reg_9> <addr_reg_10> <addr_reg_11> <addr_reg_12> <addr_reg_13> <addr_reg_14> <addr_reg_15> <addr_reg_16> <addr_reg_17> <addr_reg_18> <addr_reg_19> <addr_reg_20> <addr_reg_21> <addr_reg_22> 
+WARNING:Xst:1710 - FF/Latch <data_f2s_reg_8> (without init value) has a constant value of 0 in block <mem_ctl_mt45w8mw16>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <addr_reg_8> (without init value) has a constant value of 0 in block <mem_ctl_mt45w8mw16>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:2677 - Node <ctrl_unit/data_s2f_reg_15> of sequential type is unconnected in block <ram_ctrl_test>.
+WARNING:Xst:2677 - Node <ctrl_unit/data_s2f_reg_14> of sequential type is unconnected in block <ram_ctrl_test>.
+WARNING:Xst:2677 - Node <ctrl_unit/data_s2f_reg_13> of sequential type is unconnected in block <ram_ctrl_test>.
+WARNING:Xst:2677 - Node <ctrl_unit/data_s2f_reg_12> of sequential type is unconnected in block <ram_ctrl_test>.
+WARNING:Xst:2677 - Node <ctrl_unit/data_s2f_reg_11> of sequential type is unconnected in block <ram_ctrl_test>.
+WARNING:Xst:2677 - Node <ctrl_unit/data_s2f_reg_10> of sequential type is unconnected in block <ram_ctrl_test>.
+WARNING:Xst:2677 - Node <ctrl_unit/data_s2f_reg_9> of sequential type is unconnected in block <ram_ctrl_test>.
+WARNING:Xst:2677 - Node <ctrl_unit/data_s2f_reg_8> of sequential type is unconnected in block <ram_ctrl_test>.
+
+Optimizing unit <ram_ctrl_test> ...
+
+Optimizing unit <debounce> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block ram_ctrl_test, actual ratio is 3.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 139
+ Flip-Flops                                            : 139
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : ram_ctrl_test.ngr
+Top Level Output File Name         : ram_ctrl_test
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : No
+
+Design Statistics
+# IOs                              : 68
+
+Cell Usage :
+# BELS                             : 428
+#      GND                         : 1
+#      INV                         : 80
+#      LUT1                        : 4
+#      LUT2                        : 4
+#      LUT2_D                      : 4
+#      LUT3                        : 3
+#      LUT3_D                      : 4
+#      LUT3_L                      : 2
+#      LUT4                        : 133
+#      LUT4_D                      : 2
+#      MUXCY                       : 104
+#      MUXF5                       : 2
+#      VCC                         : 1
+#      XORCY                       : 84
+# FlipFlops/Latches                : 139
+#      FDC                         : 100
+#      FDCE                        : 32
+#      FDP                         : 7
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 67
+#      IBUF                        : 12
+#      IOBUF                       : 8
+#      OBUF                        : 39
+#      OBUFT                       : 8
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s500efg320-5 
+
+ Number of Slices:                      147  out of   4656     3%  
+ Number of Slice Flip Flops:            131  out of   9312     1%  
+ Number of 4 input LUTs:                236  out of   9312     2%  
+ Number of IOs:                          68
+ Number of bonded IOBs:                  68  out of    232    29%  
+    IOB Flip Flops:                       8
+ Number of GCLKs:                         1  out of     24     4%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 139   |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+------------------------------------+-----------------------------+-------+
+Control Signal                      | Buffer(FF name)             | Load  |
+------------------------------------+-----------------------------+-------+
+N0(XST_GND:G)                       | NONE(debounce_unit0/q_reg_0)| 92    |
+db_btn<3>(debounce_unit3/db_tick1:O)| NONE(ctrl_unit/addr_reg_0)  | 47    |
+------------------------------------+-----------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 9.901ns (Maximum Frequency: 101.001MHz)
+   Minimum input arrival time before clock: 9.587ns
+   Maximum output required time after clock: 4.562ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 9.901ns (frequency: 101.001MHz)
+  Total number of paths / destination ports: 17285 / 143
+-------------------------------------------------------------------------
+Delay:               9.901ns (Levels of Logic = 27)
+  Source:            debounce_unit2/q_reg_0 (FF)
+  Destination:       ctrl_unit/addr_reg_7 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: debounce_unit2/q_reg_0 to ctrl_unit/addr_reg_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              3   0.514   0.603  debounce_unit2/q_reg_0 (debounce_unit2/q_reg_0)
+     LUT1:I0->O            1   0.612   0.000  debounce_unit2/Msub_q_next_share0000_cy<0>_rt (debounce_unit2/Msub_q_next_share0000_cy<0>_rt)
+     MUXCY:S->O            1   0.404   0.000  debounce_unit2/Msub_q_next_share0000_cy<0> (debounce_unit2/Msub_q_next_share0000_cy<0>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<1> (debounce_unit2/Msub_q_next_share0000_cy<1>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<2> (debounce_unit2/Msub_q_next_share0000_cy<2>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<3> (debounce_unit2/Msub_q_next_share0000_cy<3>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<4> (debounce_unit2/Msub_q_next_share0000_cy<4>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<5> (debounce_unit2/Msub_q_next_share0000_cy<5>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<6> (debounce_unit2/Msub_q_next_share0000_cy<6>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<7> (debounce_unit2/Msub_q_next_share0000_cy<7>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<8> (debounce_unit2/Msub_q_next_share0000_cy<8>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<9> (debounce_unit2/Msub_q_next_share0000_cy<9>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<10> (debounce_unit2/Msub_q_next_share0000_cy<10>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<11> (debounce_unit2/Msub_q_next_share0000_cy<11>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<12> (debounce_unit2/Msub_q_next_share0000_cy<12>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<13> (debounce_unit2/Msub_q_next_share0000_cy<13>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<14> (debounce_unit2/Msub_q_next_share0000_cy<14>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<15> (debounce_unit2/Msub_q_next_share0000_cy<15>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<16> (debounce_unit2/Msub_q_next_share0000_cy<16>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<17> (debounce_unit2/Msub_q_next_share0000_cy<17>)
+     MUXCY:CI->O           1   0.051   0.000  debounce_unit2/Msub_q_next_share0000_cy<18> (debounce_unit2/Msub_q_next_share0000_cy<18>)
+     XORCY:CI->O           1   0.699   0.360  debounce_unit2/Msub_q_next_share0000_xor<19> (debounce_unit2/q_next_share0000<19>)
+     LUT4:I3->O            2   0.612   0.383  debounce_unit2/q_next<19>1 (debounce_unit2/q_next<19>)
+     LUT4:I3->O            1   0.612   0.000  debounce_unit2/state_reg_cmp_eq0000_wg_lut<4> (debounce_unit2/state_reg_cmp_eq0000_wg_lut<4>)
+     MUXCY:S->O            1   0.404   0.000  debounce_unit2/state_reg_cmp_eq0000_wg_cy<4> (debounce_unit2/state_reg_cmp_eq0000_wg_cy<4>)
+     MUXCY:CI->O           2   0.399   0.383  debounce_unit2/state_reg_cmp_eq0000_wg_cy<5> (debounce_unit2/state_reg_cmp_eq0000)
+     LUT4_D:I3->O          6   0.612   0.638  debounce_unit2/db_tick1 (db_btn<2>)
+     LUT3:I1->O            8   0.612   0.643  ctrl_unit/addr_reg_not00011 (ctrl_unit/addr_reg_not0001)
+     FDCE:CE                   0.483          ctrl_unit/addr_reg_0
+    ----------------------------------------
+    Total                      9.901ns (6.891ns logic, 3.010ns route)
+                                       (69.6% logic, 30.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 2225 / 149
+-------------------------------------------------------------------------
+Offset:              9.587ns (Levels of Logic = 11)
+  Source:            btn<2> (PAD)
+  Destination:       ctrl_unit/addr_reg_7 (FF)
+  Destination Clock: clk rising
+
+  Data Path: btn<2> to ctrl_unit/addr_reg_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             5   1.106   0.690  btn_2_IBUF (btn_2_IBUF)
+     LUT2:I0->O           24   0.612   1.094  debounce_unit2/q_next<0>11 (debounce_unit2/N01)
+     LUT4:I2->O            2   0.612   0.532  debounce_unit2/q_next<12>1 (debounce_unit2/q_next<12>)
+     LUT4:I0->O            1   0.612   0.000  debounce_unit2/state_reg_cmp_eq0000_wg_lut<1> (debounce_unit2/state_reg_cmp_eq0000_wg_lut<1>)
+     MUXCY:S->O            1   0.404   0.000  debounce_unit2/state_reg_cmp_eq0000_wg_cy<1> (debounce_unit2/state_reg_cmp_eq0000_wg_cy<1>)
+     MUXCY:CI->O           1   0.052   0.000  debounce_unit2/state_reg_cmp_eq0000_wg_cy<2> (debounce_unit2/state_reg_cmp_eq0000_wg_cy<2>)
+     MUXCY:CI->O           1   0.052   0.000  debounce_unit2/state_reg_cmp_eq0000_wg_cy<3> (debounce_unit2/state_reg_cmp_eq0000_wg_cy<3>)
+     MUXCY:CI->O           1   0.052   0.000  debounce_unit2/state_reg_cmp_eq0000_wg_cy<4> (debounce_unit2/state_reg_cmp_eq0000_wg_cy<4>)
+     MUXCY:CI->O           2   0.399   0.383  debounce_unit2/state_reg_cmp_eq0000_wg_cy<5> (debounce_unit2/state_reg_cmp_eq0000)
+     LUT4_D:I3->O          6   0.612   0.638  debounce_unit2/db_tick1 (db_btn<2>)
+     LUT3:I1->O            8   0.612   0.643  ctrl_unit/addr_reg_not00011 (ctrl_unit/addr_reg_not0001)
+     FDCE:CE                   0.483          ctrl_unit/addr_reg_0
+    ----------------------------------------
+    Total                      9.587ns (5.607ns logic, 3.980ns route)
+                                       (58.5% logic, 41.5% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 45 / 37
+-------------------------------------------------------------------------
+Offset:              4.562ns (Levels of Logic = 1)
+  Source:            ctrl_unit/tri_reg (FF)
+  Destination:       MemDB<15> (PAD)
+  Source Clock:      clk rising
+
+  Data Path: ctrl_unit/tri_reg to MemDB<15>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDP:C->Q             16   0.514   0.879  ctrl_unit/tri_reg (ctrl_unit/tri_reg)
+     OBUFT:T->O                3.169          MemDB_15_OBUFT (MemDB<15>)
+    ----------------------------------------
+    Total                      4.562ns (3.683ns logic, 0.879ns route)
+                                       (80.7% logic, 19.3% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 8.00 secs
+Total CPU time to Xst completion: 8.88 secs
+ 
+--> 
+
+Total memory usage is 146732 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   58 (   0 filtered)
+Number of infos    :    3 (   0 filtered)
+
