@@ -23,6 +23,9 @@
 
   <files xmlns="http://www.xilinx.com/XMLSchema">
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_LSO" xil_pn:name=".lso"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name=".prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name=".stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name=".xst"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="EppController.prj"/>
     <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="EppController.stx"/>
     <file xil_pn:fileType="FILE_XST" xil_pn:name="EppController.xst"/>
