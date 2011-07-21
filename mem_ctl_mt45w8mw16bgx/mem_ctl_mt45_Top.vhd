@@ -29,6 +29,7 @@ entity memctl_top is
 		reset:        in std_logic;
 		AddressBusIn: in unsigned(7 downto 0);
 		DataBusIn:    in unsigned(7 downto 0);
+		DataBusOut:   out std_logic_vector(7 downto 0);
 		IOW: in std_logic;
 		IOR: in std_logic;
 		ready:        out std_logic;
@@ -78,7 +79,7 @@ signal AddressBusEpp:        std_logic_vector(22 downto 0);
 signal DataBusEpp:           std_logic_vector(15 downto 0);
 signal tDataEpp:             std_logic_vector(15 downto 0);
 signal tDataEpp_r:           std_logic_vector(15 downto 0);
-signal tDataEpp_ur:          std_logic_vector(15 downto 0);
+signal tDataEpp_ur:          std_logic_vector(7 downto 0);
 signal ctrl_mem, trw:        std_logic;
 signal CntrTick0, CntrTick1: std_logic;
 
@@ -104,7 +105,7 @@ mem_ctrl: entity work.mem_ctl_mt45w8mw16(arch)
 						 lb_en=>MemControlReg(0),
 						 ub_en=>MemControlReg(1),
 						 ready=>ready,
-						 data_s2f_ur=> tDataEpp_ur,
+						 data_s2fmuxed=> tDataEpp_ur,
 						 data_s2f_r => tDataEpp_r,
 						 s_addr=>s_addr, 
 						 adv_n =>adv_n,
@@ -122,7 +123,7 @@ mem_ctrl: entity work.mem_ctl_mt45w8mw16(arch)
 AddressBusEpp <= std_logic_vector(AddrReg2(6 downto 0) & AddrReg1(7 downto 0) & AddrReg0(7 downto 0));
 DataBusEpp <=std_logic_vector(DataReg1(7 downto 0) & DataReg0(7 downto 0));
 
-
+DataBusOut<=tDataEpp_ur;
 
 process(mclk, reset)
 begin
@@ -169,7 +170,7 @@ AddrReg2next<= DataBusIn when AddressBusIn(3 downto 0)="010" and IOW='1' else
 
 
 DataReg0next<= DataBusIn when AddressBusIn(3 downto 0)="0011" and IOW='1' else DataReg0;
-DataReg1next<= DataBusIn when AddressBusIn(3 downto 0)="0100" and IOW='1' else DataReg1next;
+DataReg1next<= DataBusIn when AddressBusIn(3 downto 0)="0100" and IOW='1' else DataReg1;
 MemControlnext<= DataBusIn when AddressBusIn(3 downto 0)="0100" and IOW='1' else MemControlReg;
 
 

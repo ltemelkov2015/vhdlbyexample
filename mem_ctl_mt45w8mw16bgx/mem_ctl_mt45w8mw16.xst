@@ -1,5 +1,5 @@
-set -tmpdir "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/xst/projnav.tmp"
-set -xsthdpdir "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/xst"
+set -tmpdir "C:/Nexus2memControl/xst/projnav.tmp"
+set -xsthdpdir "C:/Nexus2memControl/xst"
 elaborate
 -ifn mem_ctl_mt45w8mw16.prj
 -ifmt mixed

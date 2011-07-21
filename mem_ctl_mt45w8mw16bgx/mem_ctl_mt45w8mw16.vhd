@@ -38,7 +38,8 @@ entity mem_ctl_mt45w8mw16 is
 			lb_en:      in  std_logic;
 			ub_en:      in  std_logic;
 			ready:      out std_logic;
-			data_s2f_ur:out std_logic_vector(15 downto 0);
+			--data_s2f_ur:out std_logic_vector(15 downto 0);
+			data_s2fmuxed: out std_logic_vector(7 downto 0);
 			data_s2f_r: out std_logic_vector(15 downto 0);
 			-- to/from SRAM chip mem_ctl_mt45w8mw16
 			s_addr:     out std_logic_vector(22 downto 0);
@@ -192,7 +193,8 @@ end process;
 
 -- to main system
 data_s2f_r  <= data_s2f_reg;
-data_s2f_ur <= dio;
+--data_s2f_ur <= dio;
+data_s2fmuxed <= dio(7 downto 0) when lb_reg='0' else dio(15 downto 8);
 
 --to SRAM
 we_n <=we_reg;

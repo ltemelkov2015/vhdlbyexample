@@ -20,9 +20,6 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
 
 
@@ -43,9 +40,11 @@ entity EppController is
       pwr 	   : in std_logic;
       pwait 	: out std_logic;
 		--to/from mem control side
-		AddressBusOut:    out std_logic_vector(7 downto 0);
-		DataBusOut   :    out std_logic_vector(7 downto 0);
+		AddressBusOut:     out std_logic_vector(7 downto 0);
+		DataBusOut   :     out std_logic_vector(7 downto 0);
+		EppDataBusIn:      in  std_logic_vector(7 downto 0);
 		ctrlDataWriteTick: out std_logic;
+		ctrlDataReadTick:  out std_logic;
 		Ready:      in std_logic
 		); 
 end EppController;
@@ -78,6 +77,7 @@ signal ctrlDataStb: std_logic;
 signal BusEppIn, BusEppOut,BusEppData: std_logic_vector(7 downto 0);
 signal pwait_reg, pwait_next: std_logic;
 signal ctrlDataWr_reg, ctrlDataWr_next: std_logic;
+signal ctrlDataRd_reg, ctrlDataRd_next: std_logic;
 signal ctrlReady: std_logic;
 
 
@@ -87,6 +87,8 @@ begin
 ctrlAdrStb <=astb;
 ctrlWriteStb <=pwr;
 ctrlDataWriteTick<=ctrlDataWr_reg;
+ctrlDataReadTick<=ctrlDataRd_reg;
+
 pwait<= pwait_reg;
 ctrlReady<=Ready;
 AddressBusOut<="0000" & Adr_reg;
@@ -98,7 +100,7 @@ DataBusOut<=busEppIn;
 busEppIn <= pdb;
 pdb <= busEppOut when ctrlWriteStb = '1' and ctrlDir_reg = '1' else "ZZZZZZZZ";
 busEppOut <= "0000" & Adr_reg when ctrlAdrStb = '0' else busEppData;
-
+busEppData<=EppDataBusIn;
 
 -- next state register logic
 Adr_next <= pdb(3 downto 0) when ctrlAdr_reg='1' else Adr_reg;
@@ -114,6 +116,7 @@ begin
 	 ctrlDir_reg<='0';
 	 pwait_reg<='0';
 	 ctrlDataWr_reg<='0';
+	 ctrlDataRd_reg<='0';
   elsif(mclk'event and mclk='1') then
     state_reg <=state_next;
     Adr_reg<= Adr_next;
@@ -121,20 +124,19 @@ begin
 	 ctrlDir_reg<=ctrlDir_reg;
 	 pwait_reg<=pwait_next;
 	 ctrlDataWr_reg<=ctrlDataWr_next;
+	 ctrlDataRd_reg<=ctrlDataRd_next;
   end if;
 end process; 
 	
-------------------------
+------------------------------------------------------------------
 -- FSM next state logic
-------------------------
+------------------------------------------------------------------
 process(state_reg, ctrlAdrStb, ctrlWriteStb, ctrlDataStb, ctrlReady)
 begin
 
 case state_reg is
   when stEppReady =>
-               if ctrlReady = '1' then  --mem controller busy, usb waits 10ms before time out
-					   state_next <= stEppReady;
-					elsif ctrlAdrStb = '0' and ctrlWriteStb = '0' then
+					if ctrlAdrStb = '0' and ctrlWriteStb = '0' then
 						state_next <= stEppAdrWriteA;
                elsif ctrlAdrStb = '0' and ctrlWriteStb = '1' then
 						state_next <= stEppAdrReadA;
@@ -213,57 +215,69 @@ end process;
 -------------------------------------------------------------
 -- look ahead buffers. Those sre control signals to datapath
 -------------------------------------------------------------
-process(state_next)
+process(state_next, ctrlReady)
 begin
-ctrlDataWr_next <='0'; --default
+ctrlDataWr_next <='0'; --default outputs
+ctrlDataRd_next <='0';
 pwait_next<='0';
 ctrlAdr_next<='0';
 ctrlDir_next<='0';
 
 case state_next is
 
+-- Idle
 when stEppReady=>
+
+-- Address Register Write
 when stEppAdrWriteA=>
 when stEppAdrWriteB=>
      ctrlAdr_next<='1';
-when stEppAdrWriteC=>
-     pwait_next<='1';
-     
-     
+when stEppAdrWriteC=> 
+ if(ctrlReady='0') then 
+    pwait_next<='1'; 
+ else 
+    pwait_next<='0'; --default
+ end if;
 
-
+ 
+--DataRegister write  
 when stEppDataWriteA=>
 when stEppDataWriteB=>
      ctrlDataWr_next<='1';
 when stEppDataWriteC=>
-     pwait_next<='1';
-    
-	  
-     
-     
-
-
+if(ctrlReady='0') then 
+    pwait_next<='1'; 
+ else 
+    pwait_next<='0'; 
+ end if;
+    	  
+--Data register read
 when stEppDataReadA=>
      ctrlDir_next<='1';
 when stEppDataReadB=>
+     ctrlDataRd_next <='1';
      ctrlDir_next<='1';
 when stEppDataReadC=>
      ctrlDir_next<='1';
-	  pwait_next<='1';
+	  if(ctrlReady='0') then 
+        pwait_next<='1'; 
+     else 
+        pwait_next<='0'; 
+     end if;
      
-
-
-
-
+--Address register read
 when stEppAdrReadA=>
      ctrlDir_next<='1';
 when stEppAdrReadB=>
      ctrlDir_next<='1';
 when stEppAdrReadC=>
      ctrlDir_next<='1';
-	  pwait_next<='1';
+	     if(ctrlReady='0') then 
+           pwait_next<='1'; 
+        else 
+           pwait_next<='0'; --default
+        end if;
     
-
 end case;
 end process;
 end Behavioral;

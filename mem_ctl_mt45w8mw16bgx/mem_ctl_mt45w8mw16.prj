@@ -1,1 +1,2 @@
+vhdl work "mem_ctl_mt45_Top.vhd"
 vhdl work "mem_ctl_mt45w8mw16.vhd"
