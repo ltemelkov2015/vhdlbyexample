@@ -85,6 +85,7 @@ signal ctrlReady: std_logic;
 
 begin
 ctrlAdrStb <=astb;
+ctrlDataStb <=dstb;
 ctrlWriteStb <=pwr;
 ctrlDataWriteTick<=ctrlDataWr_reg;
 ctrlDataReadTick<=ctrlDataRd_reg;
@@ -233,7 +234,7 @@ when stEppAdrWriteA=>
 when stEppAdrWriteB=>
      ctrlAdr_next<='1';
 when stEppAdrWriteC=> 
- if(ctrlReady='0') then 
+ if(ctrlReady='1') then 
     pwait_next<='1'; 
  else 
     pwait_next<='0'; --default
@@ -242,10 +243,10 @@ when stEppAdrWriteC=>
  
 --DataRegister write  
 when stEppDataWriteA=>
-when stEppDataWriteB=>
      ctrlDataWr_next<='1';
+when stEppDataWriteB=>
 when stEppDataWriteC=>
-if(ctrlReady='0') then 
+if(ctrlReady='1') then 
     pwait_next<='1'; 
  else 
     pwait_next<='0'; 
@@ -259,7 +260,7 @@ when stEppDataReadB=>
      ctrlDir_next<='1';
 when stEppDataReadC=>
      ctrlDir_next<='1';
-	  if(ctrlReady='0') then 
+	  if(ctrlReady='1') then 
         pwait_next<='1'; 
      else 
         pwait_next<='0'; 
@@ -272,7 +273,7 @@ when stEppAdrReadB=>
      ctrlDir_next<='1';
 when stEppAdrReadC=>
      ctrlDir_next<='1';
-	     if(ctrlReady='0') then 
+	     if(ctrlReady='1') then 
            pwait_next<='1'; 
         else 
            pwait_next<='0'; --default

@@ -171,7 +171,7 @@ AddrReg2next<= DataBusIn when AddressBusIn(3 downto 0)="010" and IOW='1' else
 
 DataReg0next<= DataBusIn when AddressBusIn(3 downto 0)="0011" and IOW='1' else DataReg0;
 DataReg1next<= DataBusIn when AddressBusIn(3 downto 0)="0100" and IOW='1' else DataReg1;
-MemControlnext<= DataBusIn when AddressBusIn(3 downto 0)="0100" and IOW='1' else MemControlReg;
+MemControlnext<= DataBusIn when AddressBusIn(3 downto 0)="0101" and IOW='1' else MemControlReg;
 
 
 

@@ -1,1 +1,4 @@
-work	"C:/Documents and Settings/mem_ctl_mt45w8mw16bgx//dff_en.vhd"
+work	"EppController.vhd"
+work	"EppMemCtrlTop.vhd"
+work	"mem_ctl_mt45_Top.vhd"
+work	"mem_ctl_mt45w8mw16.vhd"

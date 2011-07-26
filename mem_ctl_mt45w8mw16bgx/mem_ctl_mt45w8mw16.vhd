@@ -108,7 +108,7 @@ begin
 addr_next<=addr_reg;  -- default
 data_f2s_next <= data_f2s_reg;
 data_s2f_next <= data_s2f_reg;
-ready <='0';
+--ready <='1';
 
 case state_reg is
   when idle=>
@@ -116,6 +116,7 @@ case state_reg is
       state_next <=idle;
     else
       addr_next<=addr;
+		
         if rw='0' then -- write
           state_next <=wr1;
           data_f2s_next <=data_f2s;
@@ -123,7 +124,7 @@ case state_reg is
           state_next <=rd1;
         end if;
      end if;
-ready <='1';
+--ready <='1';
 
   when rd1=>
     state_next <=rd2;
@@ -157,9 +158,12 @@ oe_buf  <='1';
 adv_buf <='1';
 lb_buf <= lb_reg;
 ub_buf <= ub_reg;
+ready<='0'; --unregistered signal
+
 
 case state_next is
-when idle=>
+  when idle=>
+   ready <='1';
   when rd1=> 
       lb_buf<=lb_en;
       ub_buf<=ub_en;		
