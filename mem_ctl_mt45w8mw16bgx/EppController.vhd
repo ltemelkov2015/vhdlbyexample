@@ -16,7 +16,7 @@
 -- Revision: 
 -- Revision 0.01 - File Created
 -- Additional Comments: 
---
+-- Moved ctrlDataWriteTick to state A(one state ahead)
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;

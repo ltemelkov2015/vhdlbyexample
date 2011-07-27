@@ -111,8 +111,9 @@ ARCHITECTURE behavior OF Epptb IS
 	signal MemCtrlAdr2: std_logic_vector(7 downto 0):=x"00";      --A2
 	signal MemCtrlData0: std_logic_vector(7 downto 0):=x"0A";     --A3
 	signal MemCtrlData1: std_logic_vector(7 downto 0):=x"0B";     --A4
-	signal MemCtrlControl: std_logic_vector(7 downto 0):=x"01";   --A5
-	
+	signal MemCtrlControl: std_logic_vector(7 downto 0):=x"06";   --A5
+	signal MemCtrlData00:  std_logic_vector(7 downto 0):=x"07";   --A3
+	signal MemCtrlData01:  std_logic_vector(7 downto 0):=x"08";   --A4
 	
 	--Internal signals for state machine
 	type stateType is(stHostReady, stHostEppAdr0WriteA, stHostEppAdr0WriteB,
@@ -124,6 +125,10 @@ ARCHITECTURE behavior OF Epptb IS
 											 stHostEppAdr6WriteA, stHostEppAdr6WriteB,
 											 
 											 
+											 stHostEppAdr33WriteA, stHostEppAdr33WriteB,
+											 stHostEppAdr44WriteA, stHostEppAdr44WriteB,
+											 
+											 
 	
 	                               stHostMemAdr0WriteA, stHostMemAdr0WriteB,
 											 stHostMemAdr1WriteA, stHostMemAdr1WriteB,
@@ -133,7 +138,11 @@ ARCHITECTURE behavior OF Epptb IS
 
 
                                   stHostMemData0WriteA, stHostMemData0WriteB,
-											 stHostMemData1WriteA, stHostMemData1WriteB
+											 stHostMemData1WriteA, stHostMemData1WriteB,
+											 
+											 
+											 stHostMemData00WriteA, stHostMemData00WriteB,
+											 stHostMemData01WriteA, stHostMemData01WriteB
 	
 	
 	                               );
@@ -363,8 +372,60 @@ host_reset:process
 			 
 			 
 		when stHostMemData1WriteB =>
-		     ---- go back to Epp Ready
-			  state_next<= stHostReady;
+		     ---- write two more data bytes
+			  state_next<= stHostEppAdr33WriteA;
+			  
+			  
+		when stHostEppAdr33WriteA=>
+		    if pwait='0' then 
+			   state_next <= stHostEppAdr33WriteA;
+			 else
+			   state_next <= stHostEppAdr33WriteB;
+			 end if;
+			 
+			 
+			 
+		when 	stHostEppAdr33WriteB=>
+             state_next <= stHostMemData00WriteA;				 
+			 
+			 
+			  
+			  
+		when stHostMemData00WriteA=>
+		   if pwait='0' then
+			  state_next <= stHostMemData00WriteA;
+			else
+			  state_next <= stHostMemData00WriteB;
+			end if;
+			
+			
+		when 	stHostMemData00WriteB=>
+		   state_next <= stHostEppAdr44WriteA;
+			
+		when  stHostEppAdr44WriteA=>
+		   if pwait ='0' then 
+			  state_next <= stHostEppAdr44WriteA;
+			else 
+			  state_next <= stHostEppAdr44WriteB;
+			end if;
+			
+			
+		when stHostEppAdr44WriteB=>
+		   state_next <= stHostMemData01WriteA;
+			
+			
+		when stHostMemData01WriteA=>
+		   if pwait='0' then 
+			state_next <= stHostMemData01WriteA;
+			else
+			state_next <= stHostMemData01WriteB;
+			end if;
+			
+			
+			
+	   --when stHostMemData01WriteB=>
+		-- go back to Epp Ready
+		
 			  
 		when others=>
 		   state_next <=stHostReady;
@@ -375,7 +436,12 @@ end process;
 	  
 	
 		
-	  
+	
+
+
+
+
+	
 	  
         
  
@@ -497,6 +563,39 @@ end process;
 			 
 			 
 		 when stHostMemData1WriteB =>
+		 
+			  
+			  
+		 when stHostMemData00WriteA=>
+		       dstb<='0';
+				 pdb<=MemCtrlData00;
+				 
+			
+			
+		 when 	stHostMemData00WriteB=>
+		   
+			
+			
+		 when stHostMemData01WriteA=>
+		      dstb<='0';
+				 pdb<=MemCtrlData01;
+		   
+			
+		when stHostEppAdr33WriteA=>
+		     astb <='0';
+			  pdb<= EppAdr3;
+			  
+		when stHostEppAdr33WriteB=>
+		
+		
+		when stHostEppAdr44WriteA=>
+		     astb <='0';
+			  pdb<= EppAdr4;
+			  
+			  
+			  
+		when stHostEppAdr44WriteB=>
+			  
 		 
 		 when others=>
 	 

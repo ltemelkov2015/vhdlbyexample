@@ -138,11 +138,11 @@
   </files>
 
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
-    <transform xil_pn:end_ts="1311591235" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1311591235">
+    <transform xil_pn:end_ts="1311692175" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1311692175">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1311634287" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1311634287">
+    <transform xil_pn:end_ts="1311695918" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1311695918">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="EppController.vhd"/>
@@ -152,19 +152,19 @@
       <outfile xil_pn:name="mem_ctl_mt45_Top.vhd"/>
       <outfile xil_pn:name="mem_ctl_mt45w8mw16.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1311621130" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="3331753318268887345" xil_pn:start_ts="1311621130">
+    <transform xil_pn:end_ts="1311692175" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="3331753318268887345" xil_pn:start_ts="1311692175">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1311621130" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="8112101581207134579" xil_pn:start_ts="1311621130">
+    <transform xil_pn:end_ts="1311692175" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="8112101581207134579" xil_pn:start_ts="1311692175">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1311591235" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="-9071364849804934110" xil_pn:start_ts="1311591235">
+    <transform xil_pn:end_ts="1311692175" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="-9071364849804934110" xil_pn:start_ts="1311692175">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1311634303" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1311634303">
+    <transform xil_pn:end_ts="1311695920" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1311695920">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="EppController.vhd"/>
@@ -174,9 +174,10 @@
       <outfile xil_pn:name="mem_ctl_mt45_Top.vhd"/>
       <outfile xil_pn:name="mem_ctl_mt45w8mw16.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1311634306" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-2793646970456815068" xil_pn:start_ts="1311634303">
+    <transform xil_pn:end_ts="1311695924" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-2793646970456815068" xil_pn:start_ts="1311695920">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForProperties"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="Epptb_beh.prj"/>
@@ -186,9 +187,11 @@
       <outfile xil_pn:name="isim.log"/>
       <outfile xil_pn:name="xilinxsim.ini"/>
     </transform>
-    <transform xil_pn:end_ts="1311634307" xil_pn:in_ck="-1895793350458165204" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-6297246789833692975" xil_pn:start_ts="1311634306">
+    <transform xil_pn:end_ts="1311695924" xil_pn:in_ck="-1895793350458165204" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-6297246789833692975" xil_pn:start_ts="1311695924">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForProperties"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="Epptb_isim_beh.wdb"/>
