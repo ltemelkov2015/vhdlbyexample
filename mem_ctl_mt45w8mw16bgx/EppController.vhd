@@ -122,7 +122,7 @@ begin
     state_reg <=state_next;
     Adr_reg<= Adr_next;
 	 ctrlAdr_reg<=ctrlAdr_next;
-	 ctrlDir_reg<=ctrlDir_reg;
+	 ctrlDir_reg<=ctrlDir_next;
 	 pwait_reg<=pwait_next;
 	 ctrlDataWr_reg<=ctrlDataWr_next;
 	 ctrlDataRd_reg<=ctrlDataRd_next;
@@ -255,8 +255,9 @@ if(ctrlReady='1') then
 --Data register read
 when stEppDataReadA=>
      ctrlDir_next<='1';
+	  ctrlDataRd_next <='1';
 when stEppDataReadB=>
-     ctrlDataRd_next <='1';
+     --ctrlDataRd_next <='1';
      ctrlDir_next<='1';
 when stEppDataReadC=>
      ctrlDir_next<='1';

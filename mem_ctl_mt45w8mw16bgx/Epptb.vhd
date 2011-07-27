@@ -89,11 +89,9 @@ ARCHITECTURE behavior OF Epptb IS
    constant mclk_period : time := 20 ns;
 	constant hclk_period : time := 30 ns;
 	
-	-- test against the following operations
+
 	
 																		 
-															
-   
 	                   
 	-- Some default values for Addresses and Data. 
 	-- in some of the next testbenches use random generator
@@ -106,8 +104,8 @@ ARCHITECTURE behavior OF Epptb IS
 	
 
 	
-	signal MemCtrlAdr0: std_logic_vector(7 downto 0):=x"02";      --Address 0
-	signal MemCtrlAdr1: std_logic_vector(7 downto 0):=x"02";      --A1
+	signal MemCtrlAdr0: std_logic_vector(7 downto 0):=x"FE";      --Address 0
+	signal MemCtrlAdr1: std_logic_vector(7 downto 0):=x"FE";      --A1
 	signal MemCtrlAdr2: std_logic_vector(7 downto 0):=x"00";      --A2
 	signal MemCtrlData0: std_logic_vector(7 downto 0):=x"0A";     --A3
 	signal MemCtrlData1: std_logic_vector(7 downto 0):=x"0B";     --A4
@@ -125,6 +123,12 @@ ARCHITECTURE behavior OF Epptb IS
 											 stHostEppAdr6WriteA, stHostEppAdr6WriteB,
 											 
 											 
+											 stHostEppAdr0RdA, stHostEppAdr0RdB,
+	                               stHostEppAdr1RdA, stHostEppAdr1RdB,
+											 stHostEppAdr2RdA, stHostEppAdr2RdB,
+											 
+											 
+											 
 											 stHostEppAdr33WriteA, stHostEppAdr33WriteB,
 											 stHostEppAdr44WriteA, stHostEppAdr44WriteB,
 											 
@@ -133,6 +137,15 @@ ARCHITECTURE behavior OF Epptb IS
 	                               stHostMemAdr0WriteA, stHostMemAdr0WriteB,
 											 stHostMemAdr1WriteA, stHostMemAdr1WriteB,
 											 stHostMemAdr2WriteA, stHostMemAdr2WriteB,
+											 
+											 
+											 
+											 
+	                               stHostMemAdr0RdA, stHostMemAdr0RdB,
+											 stHostMemAdr1RdA, stHostMemAdr1RdB,
+											 stHostMemAdr2RdA, stHostMemAdr2RdB,
+											 
+											 
 											 
 											 stHostMemCtrlWriteA, stHostMemCtrlWriteB,
 
@@ -423,10 +436,85 @@ host_reset:process
 			
 			
 			
-	   --when stHostMemData01WriteB=>
-		-- go back to Epp Ready
-		
+			
+		-- repeat the process several times	
+		-- or start another state like reading
+	   when stHostMemData01WriteB=>
+		   --state_next <=  stHostEppAdr33WriteA;
+		     state_next <= stHostEppAdr0RdA;
 			  
+			  
+			  
+		when stHostEppAdr0RdA=>
+		    if pwait = '0' then 
+			   state_next <= stHostEppAdr0RdA;
+			 else
+			   state_next <= stHostEppAdr0RdB;
+			 end if;
+			 
+			 
+		when stHostEppAdr0RdB=>
+		    state_next <= stHostMemAdr0RdA;
+			  
+	--
+	   when stHostMemAdr0RdA=>
+		    if pwait='0' then
+			    state_next <= stHostMemAdr0RdA;
+			else
+			    state_next <=stHostMemAdr0RdB;
+			end if;
+		
+		
+		when stHostMemAdr0RdB=>
+		    state_next <= stHostEppAdr1RdA;
+			 
+		when stHostEppAdr1RdA=>
+		   if pwait='0' then 
+			  state_next <= stHostEppAdr1RdA;
+			else
+			  state_next <= stHostEppAdr1RdB;
+			end if;
+			
+			
+	  when stHostEppAdr1RdB=>
+	     state_next <= stHostMemAdr1RdA;
+			 
+	-- 
+		when stHostMemAdr1RdA =>
+		   if pwait='0' then 
+			   state_next <= stHostMemAdr1RdA;
+			else
+			   state_next <= stHostMemAdr1RdB;
+			end if;
+			
+			
+		when stHostMemAdr1RdB=>
+		     state_next <= stHostEppAdr2RdA;
+			  
+		when stHostEppAdr2RdA=>
+		   if pwait ='0' then
+			   state_next<= stHostEppAdr2RdA;
+			else
+			  state_next <= stHostEppAdr2RdB;
+			end if;
+			
+			
+	  when stHostEppAdr2RdB =>
+	      state_next <= stHostMemAdr2RdA;
+			  
+	--		  
+		when stHostMemAdr2RdA =>
+		    if pwait='0' then 
+			    state_next <= stHostMemAdr2RdA;
+			 else
+			    state_next <= stHostMemAdr2RdB;
+			end if;
+			
+			
+	   when stHostMemAdr2RdB=>
+		     state_next <= stHostReady;
+
+      --default		
 		when others=>
 		   state_next <=stHostReady;
         		
@@ -595,7 +683,54 @@ end process;
 			  
 			  
 		when stHostEppAdr44WriteB=>
-			  
+		
+		
+		--- reading
+		when stHostMemAdr0RdA =>
+		    dstb <='0';
+			 pwr <='1';
+			 
+		when stHostMemAdr0RdB=>
+		
+		
+		
+		
+		when stHostMemAdr1RdA =>
+		    dstb <='0';
+			 pwr <='1';
+			 
+		when stHostMemAdr1RdB=> 
+
+
+
+     when stHostMemAdr2RdA =>
+		    dstb <='0';
+			 pwr <='1';
+			 
+		when stHostMemAdr2RdB=>	   
+		
+		
+		when stHostEppAdr0RdA =>
+           astb <='0';
+			  pdb <= EppAdr0;		
+ 		     
+		
+		when stHostEppAdr0RdB=>
+		
+		when stHostEppAdr1RdA=>
+		     astb <='0';
+			  pdb <= EppAdr1;
+		
+		
+		when stHostEppAdr1RdB=>
+		
+		when stHostEppAdr2RdA=>
+		     astb <='0';
+			  pdb <= EppAdr2;
+		
+		when stHostEppAdr2RdB=>
+
+  		
 		 
 		 when others=>
 	 

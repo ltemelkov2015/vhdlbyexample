@@ -89,6 +89,7 @@ constant stMemWrite: std_logic_vector(3 downto 0):="01" & "10";
 constant stMemRead:  std_logic_vector(3 downto 0):="10" & "11";
 signal MemState_reg: std_logic_vector(3 downto 0):= stMemReady;
 signal MemState_next: std_logic_vector(3 downto 0);
+signal tDataBusOut:   std_logic_vector(7 downto 0);
 
 
 begin
@@ -123,7 +124,17 @@ mem_ctrl: entity work.mem_ctl_mt45w8mw16(arch)
 AddressBusEpp <= std_logic_vector(AddrReg2(6 downto 0) & AddrReg1(7 downto 0) & AddrReg0(7 downto 0));
 DataBusEpp <=std_logic_vector(DataReg1(7 downto 0) & DataReg0(7 downto 0));
 
-DataBusOut<=tDataEpp_ur;
+DataBusOut<=tDataBusOut; 
+tDataBusOut <= tDataEpp_ur       when AddressBusIn="0000" & "0100" else
+std_logic_vector(AddrReg0)       when AddressBusIn="0000" & "0000" else
+std_logic_vector(AddrReg1)       when AddressBusIn="0000" & "0001" else
+std_logic_vector(AddrReg2)       when AddressBusIn="0000" & "0010" else
+std_logic_vector(MemControlReg)  when AddressBusIn="0000" & "0101" else
+"11111111";
+					
+
+
+
 
 process(mclk, reset)
 begin
@@ -154,28 +165,36 @@ AddrReg0next<= DataBusIn when AddressBusIn(3 downto 0)="0000" and IOW='1' else
                               (IOR='1' and MemControlReg(3)='1') else
                AddrReg0;
 					
+					
 --Tick update0 
-CntrTick0 <= '1' when AddrReg0=x"FF" else '0';
+CntrTick0 <= '1' when AddrReg0=x"FF" and AddressBusIn(3 downto 0)="0100" else '0';
 
 AddrReg1next<= DataBusIn when AddressBusIn(3 downto 0)="0001" and IOW='1' else 
-              AddrReg1 + 1 when CntrTick0='1' else
-				  AddrReg1;
+               AddrReg1 + 1 when CntrTick0='1' and 
+					                  ((IOW='1' and MemControlReg(2)='1')  or
+				                     (IOR='1' and MemControlReg(3)='1'))  else
+				   AddrReg1;
+					
 
 --Tick update1
-CntrTick1 <= '1' when AddrReg1=x"FF" else '0';
+CntrTick1 <= '1' when AddrReg1=x"FF"  and CntrTick0='1' else '0';
 
 AddrReg2next<= DataBusIn when AddressBusIn(3 downto 0)="010" and IOW='1' else 
-               AddrReg2 + 1 when CntrTick1='1' else
+               AddrReg2 + 1 when CntrTick1='1' and 
+					                  ((IOW='1' and MemControlReg(2)='1')  or
+				                     (IOR='1' and MemControlReg(3)='1'))  else
 					AddrReg2;
 
 
-DataReg0next<= DataBusIn when AddressBusIn(3 downto 0)="0011" and IOW='1' else DataReg0;
-DataReg1next<= DataBusIn when AddressBusIn(3 downto 0)="0100" and IOW='1' else DataReg1;
+
+DataReg0next<= DataBusIn   when AddressBusIn(3 downto 0)="0011" and IOW='1' else DataReg0;
+DataReg1next<= DataBusIn   when AddressBusIn(3 downto 0)="0100" and IOW='1' else DataReg1;
 MemControlnext<= DataBusIn when AddressBusIn(3 downto 0)="0101" and IOW='1' else MemControlReg;
 
 
-
--- memory control signals state machine
+----------------------------------------------------------
+-- memory control signals state machine, look ahead logic
+----------------------------------------------------------
 process(mclk, reset)
 begin
 if(reset='1') then
@@ -185,7 +204,7 @@ elsif mclk'event and mclk='1' then
 end if;
 end process;
 
---next state logic for memory controller
+--next state logic
 process(MemState_reg, AddressBusIn(3 downto 0), IOW, IOR)
 begin
 case MemState_reg is
