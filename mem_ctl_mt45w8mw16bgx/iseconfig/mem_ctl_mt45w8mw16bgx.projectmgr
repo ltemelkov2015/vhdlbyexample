@@ -7,17 +7,18 @@
    <ItemView engineview="SynthesisOnly" guiview="Source" compilemode="AutoCompile" >
       <ClosedNodes>
          <ClosedNodesVersion>2</ClosedNodesVersion>
+         <ClosedNode>/EppMemCtrTop - top C:|Nexus2memControl|EppMemCtrlTop.vhd/MemController - memctl_top - arch_top</ClosedNode>
          <ClosedNode>/memctl_top - arch_top C:|Nexus2memControl|mem_ctl_mt45_Top.vhd</ClosedNode>
          <ClosedNode>/ram_ctrl_test - Behavioral C:|Nexus2memControl|ram_ctrl_test.vhd</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>EppMemCtrTop - top (C:/Nexus2memControl/EppMemCtrlTop.vhd)</SelectedItem>
+         <SelectedItem>mem_ctl_mt45_Top.vhd (C:/Nexus2memControl/mem_ctl_mt45_Top.vhd)</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001b1000000020000000000000000000000000000000064ffffffff000000810000000000000002000001b10000000100000000000000000000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
-      <CurrentItem>EppMemCtrTop - top (C:/Nexus2memControl/EppMemCtrlTop.vhd)</CurrentItem>
+      <CurrentItem>mem_ctl_mt45_Top.vhd (C:/Nexus2memControl/mem_ctl_mt45_Top.vhd)</CurrentItem>
    </ItemView>
    <ItemView engineview="SynthesisOnly" sourcetype="" guiview="Process" >
       <ClosedNodes>
@@ -65,16 +66,16 @@
          <ClosedNode>Implement Design/Translate</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>Check Syntax</SelectedItem>
+         <SelectedItem></SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
-      <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000100000000000000000000000000000000000000000000000190000000010000000100000000000000000000000064ffffffff000000810000000000000001000001900000000100000000</ViewHeaderState>
+      <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000001cf000000010000000100000000000000000000000064ffffffff000000810000000000000001000001cf0000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem>Check Syntax</CurrentItem>
+      <CurrentItem></CurrentItem>
    </ItemView>
-   <SourceProcessView>000000ff0000000000000002000000e1000000ee01000000050100000002</SourceProcessView>
-   <CurrentView>Behavioral Simulation</CurrentView>
+   <SourceProcessView>000000ff0000000000000002000001470000008801000000050100000002</SourceProcessView>
+   <CurrentView>Implementation</CurrentView>
    <ItemView engineview="SynthesisOnly" sourcetype="DESUT_UCF" guiview="Process" >
       <ClosedNodes>
          <ClosedNodesVersion>1</ClosedNodesVersion>
@@ -97,13 +98,13 @@
          <ClosedNode>/ram_ctrl_test - Behavioral C:|Nexus2memControl|ram_ctrl_test.vhd</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>Epptb - behavior (C:/Nexus2memControl/Epptb.vhd)</SelectedItem>
+         <SelectedItem>mem_ctrl - mem_ctl_mt45w8mw16 - arch (C:/Nexus2memControl/mem_ctl_mt45w8mw16.vhd)</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001df000000020000000000000000000000000000000064ffffffff000000810000000000000002000001df0000000100000000000000000000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
-      <CurrentItem>Epptb - behavior (C:/Nexus2memControl/Epptb.vhd)</CurrentItem>
+      <CurrentItem>mem_ctrl - mem_ctl_mt45w8mw16 - arch (C:/Nexus2memControl/mem_ctl_mt45w8mw16.vhd)</CurrentItem>
    </ItemView>
    <ItemView engineview="BehavioralSim" sourcetype="" guiview="Process" >
       <ClosedNodes>
@@ -111,13 +112,13 @@
          <ClosedNode>ModelSim Simulator</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem></SelectedItem>
+         <SelectedItem/>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000001d5000000010000000100000000000000000000000064ffffffff000000810000000000000001000001d50000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem></CurrentItem>
+      <CurrentItem/>
    </ItemView>
    <ItemView engineview="BehavioralSim" sourcetype="DESUT_VHDL_ARCHITECTURE" guiview="Process" >
       <ClosedNodes>
@@ -125,13 +126,13 @@
          <ClosedNode>ModelSim Simulator</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>Simulate Behavioral Model</SelectedItem>
+         <SelectedItem>Behavioral Check Syntax</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
-      <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000100000000000000000000000000000000000000000000000136000000010000000100000000000000000000000064ffffffff000000810000000000000001000001360000000100000000</ViewHeaderState>
+      <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000100000000000000000000000000000000000000000000000246000000010000000100000000000000000000000064ffffffff000000810000000000000001000002460000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem>Simulate Behavioral Model</CurrentItem>
+      <CurrentItem>Behavioral Check Syntax</CurrentItem>
    </ItemView>
    <ItemView engineview="BehavioralSim" guiview="Source" compilemode="ManualCompile" >
       <ClosedNodes>

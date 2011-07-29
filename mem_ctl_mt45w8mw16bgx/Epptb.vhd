@@ -85,9 +85,11 @@ ARCHITECTURE behavior OF Epptb IS
    signal sclk : std_logic; 
    signal cre : std_logic;
 
+
    -- Clock period definitions
    constant mclk_period : time := 20 ns;
 	constant hclk_period : time := 30 ns;
+	constant ramclk_period : time :=10 ns;
 	
 
 	
@@ -113,7 +115,7 @@ ARCHITECTURE behavior OF Epptb IS
 	signal MemCtrlData00:  std_logic_vector(7 downto 0):=x"07";   --A3
 	signal MemCtrlData01:  std_logic_vector(7 downto 0):=x"08";   --A4
 	
-	--Internal signals for state machine
+	--Internal signals for state machine >USB- Epp
 	type stateType is(stHostReady, stHostEppAdr0WriteA, stHostEppAdr0WriteB,
 	                               stHostEppAdr1WriteA, stHostEppAdr1WriteB,
 											 stHostEppAdr2WriteA, stHostEppAdr2WriteB,
@@ -121,6 +123,8 @@ ARCHITECTURE behavior OF Epptb IS
 											 stHostEppAdr4WriteA, stHostEppAdr4WriteB,
 											 stHostEppAdr5WriteA, stHostEppAdr5WriteB,
 											 stHostEppAdr6WriteA, stHostEppAdr6WriteB,
+											 
+											 stHostEppAdr3WriteAA, stHostEppAdr3WriteBB,
 											 
 											 
 											 stHostEppAdr0RdA, stHostEppAdr0RdB,
@@ -141,10 +145,13 @@ ARCHITECTURE behavior OF Epptb IS
 											 
 											 
 											 
+											 
 	                               stHostMemAdr0RdA, stHostMemAdr0RdB,
 											 stHostMemAdr1RdA, stHostMemAdr1RdB,
 											 stHostMemAdr2RdA, stHostMemAdr2RdB,
 											 
+											 
+											 stHostMemDataRd03A, stHostMemDataRd03B,
 											 
 											 
 											 stHostMemCtrlWriteA, stHostMemCtrlWriteB,
@@ -159,12 +166,21 @@ ARCHITECTURE behavior OF Epptb IS
 	
 	
 	                               );
+											 
+											 
+											 
+-- state machine Memcontrol -Sram
+type MemRamState is(idle, srd0, srd1, srd2, srd3);
+signal ms_stateReg : MemRamState:=idle;
+signal ms_stateNext:	MemRamState;										 
 
    	
 
    signal state_reg, state_next: stateType;
-   signal hclk: std_logic:='0';	
-	signal hreset:std_logic:='0';											 
+   signal hclk: std_logic:='0';
+   signal ramclk: std_logic:='0';	
+	signal hreset:std_logic:='0';	
+   constant sramData: std_logic_vector(15 downto 0):=x"070A";	
    
  
 BEGIN
@@ -210,6 +226,16 @@ BEGIN
 	  wait for hclk_period/2;
  end process host_clk;
 
+
+
+--
+ram_clock: process
+begin
+ramclk <= '0';
+wait for ramclk_period/2;
+ramclk <='1';
+wait for ramclk_period/2;
+end process ram_clock; 
 
 --
 host_reset:process
@@ -512,7 +538,32 @@ host_reset:process
 			
 			
 	   when stHostMemAdr2RdB=>
-		     state_next <= stHostReady;
+		     state_next <= stHostEppAdr3WriteAA;
+			  
+  --
+      when stHostEppAdr3WriteAA=>
+		   if pwait='0' then 
+			  state_next <= stHostEppAdr3WriteAA;
+			else
+			  state_next <= stHostEppAdr3WriteBB;
+			end if;
+			
+		
+		when stHostEppAdr3WriteBB =>
+		  state_next <= stHostMemDataRd03A;
+		  
+		when stHostMemDataRd03A=>
+		  if pwait='0' then
+		    state_next <= stHostMemDataRd03A;
+		  else
+		    state_next <= stHostMemDataRd03B;
+		 end if;
+		 
+		 --when stHostMemDataRd03B=>
+		
+			  
+			  
+		-- read memory data
 
       --default		
 		when others=>
@@ -731,9 +782,86 @@ end process;
 		when stHostEppAdr2RdB=>
 
   		
+		when stHostMemDataRd03A =>
+		    dstb <='0';
+			 pwr <= '1';
+		
+		when stHostMemDataRd03B =>
+		
+		when stHostEppAdr3WriteAA=>
+		     astb <='0';
+			  pdb <= EppAdr3;
+			  
+	  when stHostEppAdr3WriteBB =>
+	      
 		 
 		 when others=>
 	 
 	end case;
 end process; 
+
+
+-- Sram States
+process(ramclk)
+begin
+if(ramclk'event and ramclk='1') then
+ms_stateReg<=ms_stateNext;
+end if;
+end process;
+
+
+-- next state_logic for sram
+process(ms_stateReg, s_addr, adv_n, we_n, ce_n, lb_n, ub_n, oe_n, we_n, sclk, cre)
+begin
+
+
+case ms_stateReg is
+
+ when idle=>
+   
+    if (adv_n ='0' and  ce_n='0' and oe_n='0' and (lb_n='0' or ub_n='0') and we_n='1') then
+	   ms_stateNext <= srd0;
+	 else
+	   ms_stateNext <= idle;
+	end if;
+	
+	
+ when srd0=>
+    ms_stateNext <=srd1;
+	 
+		  
+
+ when srd1=>
+   ms_stateNext <=srd2;
+	
+	
+ when srd2=>
+   ms_stateNext <=srd3; 
+
+	when srd3 =>
+	   if oe_n='1'  or  ce_n='1' then
+         ms_stateNext <= idle;
+      else
+         ms_stateNext <= srd3;
+		end if;
+			
+ when others =>
+    ms_stateNext <= idle;
+	
+end case;
+end process;
+ 
+ 
+-- sram output
+process( ms_stateReg)
+begin
+   case ms_stateReg is
+	  when srd3 =>
+	      dio <= sramData; --070A h
+     when others=>
+	      dio <= (others=>'Z');
+	end case;
+end process;
+      
+	 
 end behavior;

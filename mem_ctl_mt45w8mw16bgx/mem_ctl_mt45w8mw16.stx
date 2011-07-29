@@ -3,14 +3,14 @@ Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to C:/Nexus2memControl/xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.20 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.19 secs
  
 --> Parameter xsthdpdir set to C:/Nexus2memControl/xst
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.20 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.19 secs
  
 --> WARNING:Xst:3164 - Option "-debug" found multiple times in the command line. Only the first occurence is considered.
 
@@ -20,18 +20,17 @@ Total CPU time to Xst completion: 0.20 secs
 Compiling vhdl file "C:/Nexus2memControl/mem_ctl_mt45w8mw16.vhd" in Library work.
 Architecture arch of Entity mem_ctl_mt45w8mw16 is up to date.
 Compiling vhdl file "C:/Nexus2memControl/mem_ctl_mt45_Top.vhd" in Library work.
-Entity <memctl_top> compiled.
-Entity <memctl_top> (Architecture <arch_top>) compiled.
+ERROR:HDLParsers:850 - "C:/Nexus2memControl/mem_ctl_mt45_Top.vhd" Line 109. Formal port data_s2fmuxed does not exist in Entity 'mem_ctl_mt45w8mw16'.
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.34 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.28 secs
  
 --> 
 
 Total memory usage is 119452 kilobytes
 
-Number of errors   :    0 (   0 filtered)
+Number of errors   :    1 (   0 filtered)
 Number of warnings :    1 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

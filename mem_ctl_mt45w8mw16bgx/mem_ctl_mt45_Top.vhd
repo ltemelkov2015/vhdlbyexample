@@ -86,7 +86,8 @@ signal CntrTick0, CntrTick1: std_logic;
 -- state for generating mem and rw  tick
 constant stMemReady: std_logic_vector(3 downto 0):="00" & "00"; --mem, rw last 2 bits
 constant stMemWrite: std_logic_vector(3 downto 0):="01" & "10";
-constant stMemRead:  std_logic_vector(3 downto 0):="10" & "11";
+constant stMemRead:  std_logic_vector(3 downto 0):="10" & "11"; 
+constant stMemReadA: std_logic_vector(3 downto 0):="11" & "00";
 signal MemState_reg: std_logic_vector(3 downto 0):= stMemReady;
 signal MemState_next: std_logic_vector(3 downto 0);
 signal tDataBusOut:   std_logic_vector(7 downto 0);
@@ -106,7 +107,8 @@ mem_ctrl: entity work.mem_ctl_mt45w8mw16(arch)
 						 lb_en=>MemControlReg(0),
 						 ub_en=>MemControlReg(1),
 						 ready=>ready,
-						 data_s2fmuxed=> tDataEpp_ur,
+						 --data_s2fmuxed=> tDataEpp_ur,
+						 data_s2f_ur=>open,
 						 data_s2f_r => tDataEpp_r,
 						 s_addr=>s_addr, 
 						 adv_n =>adv_n,
@@ -114,7 +116,7 @@ mem_ctrl: entity work.mem_ctl_mt45w8mw16(arch)
 			          lb_n => lb_n,
 			          ub_n =>ub_n,
 			          oe_n =>oe_n,
-			          we_n =>oe_n,
+			          we_n =>we_n,
 			          sclk=>sclk,
 			          cre=>cre,
 			          dio=>dio
@@ -125,12 +127,13 @@ AddressBusEpp <= std_logic_vector(AddrReg2(6 downto 0) & AddrReg1(7 downto 0) & 
 DataBusEpp <=std_logic_vector(DataReg1(7 downto 0) & DataReg0(7 downto 0));
 
 DataBusOut<=tDataBusOut; 
-tDataBusOut <= tDataEpp_ur       when AddressBusIn="0000" & "0100" else
+tDataBusOut <=   tDataEpp_r(15 downto 8)      when AddressBusIn="0000" & "0100" else
+                 tDataEpp_r( 7 downto 0)      when AddressBusIn="0000" & "0011" else
 std_logic_vector(AddrReg0)       when AddressBusIn="0000" & "0000" else
 std_logic_vector(AddrReg1)       when AddressBusIn="0000" & "0001" else
 std_logic_vector(AddrReg2)       when AddressBusIn="0000" & "0010" else
 std_logic_vector(MemControlReg)  when AddressBusIn="0000" & "0101" else
-"11111111";
+                "11111111";
 					
 
 
@@ -158,7 +161,7 @@ end if;
 end process;
 
 
--- next state logic for register update
+-- next state logic for register update/write
 AddrReg0next<= DataBusIn when AddressBusIn(3 downto 0)="0000" and IOW='1' else 
                AddrReg0 + 1 when (AddressBusIn(3 downto 0)="0100" and  
 					               (IOW='1' and MemControlReg(2)='1')) or
@@ -194,6 +197,7 @@ MemControlnext<= DataBusIn when AddressBusIn(3 downto 0)="0101" and IOW='1' else
 
 ----------------------------------------------------------
 -- memory control signals state machine, look ahead logic
+-- this can be made pure combinational logic as well
 ----------------------------------------------------------
 process(mclk, reset)
 begin
@@ -211,8 +215,10 @@ case MemState_reg is
   when stMemReady=>
        if(AddressBusIn(3 downto 0) = "0100" and IOW='1') then
 		    MemState_next <= stMemWrite;
-		 elsif(AddressBusIn(3 downto 0) = "0100" and IOR='1') then
+		 elsif(AddressBusIn(3 downto 0) = "0011" and IOR='1') then
 		    MemState_next <= stMemRead;
+		 elsif (AddressBusIn(3 downto 0) = "0100" and IOR='1') then
+		    MemState_next <= stMemReadA;
 		 else
 		    MemState_next<= stMemReady;
        end if;
@@ -221,10 +227,40 @@ case MemState_reg is
 	     MemState_next<= stMemReady;
 	when stMemRead =>
 	     MemState_next<= stMemReady;
+	when  stMemReadA=>
+	     MemState_next<= stMemReady;
 	when others =>
 	     MemState_next<= stMemReady;
 end case;
 end process;
+
+-------------------------------------------
+---- combinational option
+-------------------------------------------
+---- map those to the inputs
+--signal tmem, trw: std_logic;
+--
+--process(AddressBusIn(3 downto 0), IOW, IOR)
+--begin
+--       if(AddressBusIn(3 downto 0) = "0100" and IOW='1') then
+--		    --MemWrite;
+--			 tmem='1';
+--			 trw='0';
+--		 elsif(AddressBusIn(3 downto 0) = "0011" and IOR='1') then
+--		    --MemRead;
+--			 tmem='1';
+--			 trw='1';
+--		 --elsif (AddressBusIn(3 downto 0) = "0100" and IOR='1') then
+--		    --read internally reg 4
+--			  --tmem='0';
+--			  --trw='0';
+--		 else
+--		     tmem='0';
+--			  trw='0';  
+--       end if;
+--end process;
+
+
 
 end arch_top;
    

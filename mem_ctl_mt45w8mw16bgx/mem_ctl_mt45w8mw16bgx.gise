@@ -87,6 +87,9 @@
     <file xil_pn:fileType="FILE_HTML" xil_pn:name="mem_ctl_mt45w8mw16_summary.html"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="mem_ctl_mt45w8mw16_vhdl.prj"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="mem_ctl_mt45w8mw16_xst.xrpt"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="memctl_top.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="memctl_top.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="memctl_top.xst"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="memctl_top_stx_beh.prj"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_BITGEN_REPORT" xil_pn:name="ram_ctrl_test.bgn" xil_pn:subbranch="FPGAConfiguration"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_BIT" xil_pn:name="ram_ctrl_test.bit" xil_pn:subbranch="FPGAConfiguration"/>
@@ -143,7 +146,7 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1311808166" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1311808166">
+    <transform xil_pn:end_ts="1311895950" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1311895950">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="EppController.vhd"/>
@@ -153,11 +156,11 @@
       <outfile xil_pn:name="mem_ctl_mt45_Top.vhd"/>
       <outfile xil_pn:name="mem_ctl_mt45w8mw16.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1311801943" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="3331753318268887345" xil_pn:start_ts="1311801943">
+    <transform xil_pn:end_ts="1311889142" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="3331753318268887345" xil_pn:start_ts="1311889142">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1311801943" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="8112101581207134579" xil_pn:start_ts="1311801943">
+    <transform xil_pn:end_ts="1311889142" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="8112101581207134579" xil_pn:start_ts="1311889142">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
@@ -165,9 +168,13 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1311808172" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1311808172">
+    <transform xil_pn:end_ts="1311895734" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1311895734">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="EppController.vhd"/>
       <outfile xil_pn:name="EppCtrl.vhd"/>
       <outfile xil_pn:name="EppMemCtrlTop.vhd"/>
@@ -175,10 +182,13 @@
       <outfile xil_pn:name="mem_ctl_mt45_Top.vhd"/>
       <outfile xil_pn:name="mem_ctl_mt45w8mw16.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1311808175" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-2793646970456815068" xil_pn:start_ts="1311808172">
+    <transform xil_pn:end_ts="1311895737" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-2793646970456815068" xil_pn:start_ts="1311895734">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputChanged"/>
       <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="Epptb_beh.prj"/>
       <outfile xil_pn:name="Epptb_isim_beh.exe"/>
@@ -187,9 +197,10 @@
       <outfile xil_pn:name="isim.log"/>
       <outfile xil_pn:name="xilinxsim.ini"/>
     </transform>
-    <transform xil_pn:end_ts="1311808176" xil_pn:in_ck="-2040477951399393046" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-6297246789833692975" xil_pn:start_ts="1311808175">
+    <transform xil_pn:end_ts="1311895737" xil_pn:in_ck="-2040477951399393046" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-6297246789833692975" xil_pn:start_ts="1311895737">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="Epptb_isim_beh.wdb"/>

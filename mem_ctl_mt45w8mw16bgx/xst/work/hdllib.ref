@@ -7,15 +7,15 @@ EN sram_ctrl NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/mem_ctl_mt45w
 AR ram_ctrl_test behavioral "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd" sub00/vhpl08 1310930535
 AR eppmemctrtop top C:/Nexus2memControl/EppMemCtrlTop.vhd sub00/vhpl20 1311601704
 EN debounce NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/debounce.vhd" sub00/vhpl04 1310930531
-EN mem_ctl_mt45w8mw16 NULL C:/Nexus2memControl/mem_ctl_mt45w8mw16.vhd sub00/vhpl00 1311601697
-AR mem_ctl_mt45w8mw16 arch C:/Nexus2memControl/mem_ctl_mt45w8mw16.vhd sub00/vhpl03 1311601698
+EN mem_ctl_mt45w8mw16 NULL C:/Nexus2memControl/mem_ctl_mt45w8mw16.vhd sub00/vhpl00 1311886597
+AR mem_ctl_mt45w8mw16 arch C:/Nexus2memControl/mem_ctl_mt45w8mw16.vhd sub00/vhpl03 1311886598
 EN eppctrl NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppCtrl.vhd" sub00/vhpl11 1310646763
 AR debounce exp_fsmd_arch "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/debounce.vhd" sub00/vhpl05 1310930532
 AR eppcontroller behavioral C:/Nexus2memControl/EppController.vhd sub00/vhpl16 1311601700
-AR memctl_top arch_top C:/Nexus2memControl/mem_ctl_mt45_Top.vhd sub00/vhpl18 1311601702
+AR memctl_top arch_top C:/Nexus2memControl/mem_ctl_mt45_Top.vhd sub00/vhpl18 1311886600
 AR eppctrl arch "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppCtrl.vhd" sub00/vhpl12 1310646764
 EN ram_ctrl_test NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/ram_ctrl_test.vhd" sub00/vhpl07 1310930534
 EN dpimref NULL "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppCtrl.vhd" sub00/vhpl13 1310930542
-EN memctl_top NULL C:/Nexus2memControl/mem_ctl_mt45_Top.vhd sub00/vhpl17 1311601701
+EN memctl_top NULL C:/Nexus2memControl/mem_ctl_mt45_Top.vhd sub00/vhpl17 1311886599
 AR dpimref behavioral "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/EppCtrl.vhd" sub00/vhpl14 1310930543
 AR debounce fsmd_arch "C:/Documents and Settings/mem_ctl_mt45w8mw16bgx/debounce.vhd" sub00/vhpl06 1310930533
