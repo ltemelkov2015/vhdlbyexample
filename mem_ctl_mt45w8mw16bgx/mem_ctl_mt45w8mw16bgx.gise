@@ -146,9 +146,14 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1311895950" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1311895950">
+    <transform xil_pn:end_ts="1311938858" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1311938858">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputAdded"/>
+      <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="EppController.vhd"/>
       <outfile xil_pn:name="EppCtrl.vhd"/>
       <outfile xil_pn:name="EppMemCtrlTop.vhd"/>
@@ -168,10 +173,11 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1311895734" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1311895734">
+    <transform xil_pn:end_ts="1311938863" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1311938863">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="InputChanged"/>
       <status xil_pn:value="OutputChanged"/>
@@ -182,10 +188,11 @@
       <outfile xil_pn:name="mem_ctl_mt45_Top.vhd"/>
       <outfile xil_pn:name="mem_ctl_mt45w8mw16.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1311895737" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-2793646970456815068" xil_pn:start_ts="1311895734">
+    <transform xil_pn:end_ts="1311938866" xil_pn:in_ck="-5852807277729573046" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-2793646970456815068" xil_pn:start_ts="1311938863">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForProperties"/>
       <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="InputChanged"/>
@@ -197,15 +204,16 @@
       <outfile xil_pn:name="isim.log"/>
       <outfile xil_pn:name="xilinxsim.ini"/>
     </transform>
-    <transform xil_pn:end_ts="1311895737" xil_pn:in_ck="-2040477951399393046" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-6297246789833692975" xil_pn:start_ts="1311895737">
+    <transform xil_pn:end_ts="1311938866" xil_pn:in_ck="-2040477951399393046" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-6297246789833692975" xil_pn:start_ts="1311938866">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForProperties"/>
       <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputRemoved"/>
       <status xil_pn:value="OutputChanged"/>
-      <outfile xil_pn:name="Epptb_isim_beh.wdb"/>
-      <outfile xil_pn:name="isim.cmd"/>
-      <outfile xil_pn:name="isim.log"/>
+      <status xil_pn:value="OutputRemoved"/>
     </transform>
     <transform xil_pn:end_ts="1310162749" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1310162749">
       <status xil_pn:value="SuccessfullyRun"/>
@@ -242,6 +250,7 @@
       <status xil_pn:value="ReadyToRun"/>
       <status xil_pn:value="OutOfDateForInputs"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputAdded"/>
       <status xil_pn:value="InputChanged"/>
       <status xil_pn:value="InputRemoved"/>
       <status xil_pn:value="OutputRemoved"/>

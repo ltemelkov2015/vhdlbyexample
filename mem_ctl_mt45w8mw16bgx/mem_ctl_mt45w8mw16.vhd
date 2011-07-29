@@ -60,7 +60,7 @@ end mem_ctl_mt45w8mw16;
 
 architecture arch of mem_ctl_mt45w8mw16 is
 
-type state_type is(idle, rd1, rd2, rd3, rd4, wr1, wr2, wr3, wr4);
+type state_type is(idle, rd1, rd2, rd3, rd4, rd5, wr1, wr2, wr3, wr4);
 signal state_reg, state_next: state_type;
 signal data_f2s_reg, data_f2s_next: std_logic_vector(15 downto 0);
 signal data_s2f_reg, data_s2f_next: std_logic_vector(15 downto 0);
@@ -133,7 +133,9 @@ case state_reg is
     state_next <=rd4;
   when rd4=>
     data_s2f_next <= dio;
-	 state_next <= idle;
+	 state_next <= rd5;
+  when rd5=>
+    state_next <=idle;
   when wr1=>
     state_next <=wr2;
   when wr2=>
@@ -174,6 +176,7 @@ case state_next is
       oe_buf  <='0';
   when rd4=>
       oe_buf  <='0';
+  when rd5=>
   when wr1=>
         lb_buf<=lb_en;
         ub_buf<=ub_en;	

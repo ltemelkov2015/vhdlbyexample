@@ -234,9 +234,9 @@ case MemState_reg is
 end case;
 end process;
 
--------------------------------------------
----- combinational option
--------------------------------------------
+-----------------------------------------------------------------
+---- combinational option, not recomended it is not glitch free
+----------------------------------------------------------------
 ---- map those to the inputs
 --signal tmem, trw: std_logic;
 --

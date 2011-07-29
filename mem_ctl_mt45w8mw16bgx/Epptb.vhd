@@ -111,7 +111,8 @@ ARCHITECTURE behavior OF Epptb IS
 	signal MemCtrlAdr2: std_logic_vector(7 downto 0):=x"00";      --A2
 	signal MemCtrlData0: std_logic_vector(7 downto 0):=x"0A";     --A3
 	signal MemCtrlData1: std_logic_vector(7 downto 0):=x"0B";     --A4
-	signal MemCtrlControl: std_logic_vector(7 downto 0):=x"06";   --A5
+	signal MemCtrlControl: std_logic_vector(7 downto 0):=x"04";   --A5
+	
 	signal MemCtrlData00:  std_logic_vector(7 downto 0):=x"07";   --A3
 	signal MemCtrlData01:  std_logic_vector(7 downto 0):=x"08";   --A4
 	
@@ -125,6 +126,7 @@ ARCHITECTURE behavior OF Epptb IS
 											 stHostEppAdr6WriteA, stHostEppAdr6WriteB,
 											 
 											 stHostEppAdr3WriteAA, stHostEppAdr3WriteBB,
+											 stHostEppAdr4WriteAA, stHostEppAdr4WriteBB,
 											 
 											 
 											 stHostEppAdr0RdA, stHostEppAdr0RdB,
@@ -152,7 +154,7 @@ ARCHITECTURE behavior OF Epptb IS
 											 
 											 
 											 stHostMemDataRd03A, stHostMemDataRd03B,
-											 
+											 stHostMemDataRd04A, stHostMemDataRd04B,
 											 
 											 stHostMemCtrlWriteA, stHostMemCtrlWriteB,
 
@@ -559,8 +561,33 @@ host_reset:process
 		    state_next <= stHostMemDataRd03B;
 		 end if;
 		 
-		 --when stHostMemDataRd03B=>
+		 --
+		 when stHostMemDataRd03B=>
+		    state_next <= stHostEppAdr4WriteAA;
 		
+		when stHostEppAdr4WriteAA=>
+		    if pwait='0' then 
+			   state_next <= stHostEppAdr4WriteAA;
+			 else
+			   state_next <= stHostEppAdr4WriteBB;
+			 end if;
+			 
+			 
+			 
+		when stHostEppAdr4WriteBB=>
+		      state_next<= stHostMemDataRd04A;
+				
+		when stHostMemDataRd04A =>
+		   if pwait='0' then
+			  state_next <= stHostMemDataRd04A;
+			else
+			  state_next <=  stHostMemDataRd04B;
+			end if;
+			
+			
+		--when stHostMemDataRd04B=>
+			 
+			 
 			  
 			  
 		-- read memory data
@@ -793,12 +820,32 @@ end process;
 			  pdb <= EppAdr3;
 			  
 	  when stHostEppAdr3WriteBB =>
-	      
+	     
+
+     when stHostEppAdr4WriteAA=>
+         astb<='0';
+        	pdb <= EppAdr4;	
+
+     when stHostEppAdr4WriteBB=>
+	  
+	  
+	  when stHostMemDataRd04A=>
+	      dstb <='0';
+			pwr <= '1';
+			
+	 when stHostMemDataRd04B=>
+	  
+    			
 		 
 		 when others=>
 	 
 	end case;
 end process; 
+
+
+
+
+
 
 
 -- Sram States
