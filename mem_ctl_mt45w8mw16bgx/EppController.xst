@@ -1,5 +1,0 @@
-set -tmpdir "C:/Nexus2memControl/xst/projnav.tmp"
-set -xsthdpdir "C:/Nexus2memControl/xst"
-elaborate
--ifn EppController.prj
--ifmt mixed

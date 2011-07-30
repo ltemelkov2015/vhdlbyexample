@@ -1,8 +1,0 @@
-INTSTYLE=ise
-INFILE=C:\Documents and Settings\mem_ctl_mt45w8mw16bgx\ram_ctrl_test.ncd
-OUTFILE=C:\Documents and Settings\mem_ctl_mt45w8mw16bgx\ram_ctrl_test.bit
-FAMILY=Spartan3E
-PART=xc3s500e-5fg320
-WORKINGDIR=C:\Documents and Settings\mem_ctl_mt45w8mw16bgx
-LICENSE=WebPack
-USER_INFO=0_0_0
