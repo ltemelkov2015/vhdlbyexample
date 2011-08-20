@@ -1,22 +1,21 @@
 /*
  *
  */
-
 #include <windows.h>
 #include <stdio.h>
 #include <tchar.h>
 #include "./gendefs.h"
-
 #include "./dpcdefs.h"	/* holds error codes and data types for dpcutil	*/
 #include "./dpcutil.h"	/* holds declaration of DPCUTIL API calls		*/
 #include "./DpcNexusAPI.h"
+#include "./duration.h"
 
 
 
 int
 main(int argc, char * argv[]) {
 
-unsigned int ix=0;
+unsigned int ix, iy, iz;
 int idStatus = 0;
 ERC erc;
 unsigned int numdevices=0;
@@ -75,17 +74,58 @@ if(pDataGet==NULL)
   _tprintf(_T("Memory alloc Error exiting... \n"));
   return 1;
   }
+
+
+
 pDataSet->data[0]=0x05;
+
+#if 1
+for(iy=0; iy<1000; iy++)
+{
 //assuming only one Nexus device with index 0 found
 if(Nexus_SetConfigReg(pDeviceInfo[0], &erc, NULL, pDataSet)) //synch/blocking call
 {
-   if(!Nexus_GetConfigReg(pDeviceInfo[0],&erc,NULL,pDataGet))
-       _tprintf(_T("Failure Getting the CONFIG_REG %s \n"), Nexus_GetStatus(erc));
-   else
-       _tprintf(_T("Success Getting the CONFIG_REG %h \n"), pDataGet->data[0]);
+	
+       if(!Nexus_GetConfigReg(pDeviceInfo[0],&erc,NULL,pDataGet))
+	   {
+          _tprintf(_T("Failure Getting the CONFIG_REG %s \n"), Nexus_GetStatus(erc));
+		  break;
+	   }
+       else
+         {
+          _tprintf(_T("Success Getting the CONFIG_REG with value %x \n"), pDataGet->data[0]);
+	      if(pDataGet->data[0] != pDataSet->data[0])
+	        {
+		      _tprintf(_T("Failure: Success Getting the CONFIG_REG but data values are different \n"));
+			  break;
+	        }
+         }
+	
 }
 else
+{
       _tprintf(_T("Failure Setting the CONFIG_REG %s \n"), Nexus_GetStatus(erc)); 
+	  break;
+}
+
+_tprintf(_T("Iteration number: %d \n"), iy);
+}
+#endif
+//
+//for(iy=0; iy<5000; iy++)
+//{
+//if(Nexus_SetConfigReg(pDeviceInfo[0], &erc, NULL, pDataSet)) //synch/blocking call
+//    _tprintf(_T("Success Setting the CONFIG_REG with value %x \n"), pDataSet->data[0]);
+// 
+//else
+//{
+//    _tprintf(_T("Failure Setting the CONFIG_REG %s \n"), Nexus_GetStatus(erc));
+//	break;
+//
+//}
+//_tprintf(_T("Iteration number: %d \n"), iy);
+//
+//}
 
 /******* End Set/Get Config register ****************************************************/
 lCleanup:

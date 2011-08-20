@@ -3,10 +3,12 @@
 #ifndef DPCNEXUSAPI_H
 #define DPCNEXUSAPI_H
 
-
 #include "./dpcdefs.h"
 #include <tchar.h>
 
+ #ifdef __cplusplus
+ extern "C" {
+ #endif 
 
 /**
 * Structure that holds Device Information
@@ -76,5 +78,8 @@ Nexus_FreeData(
     LPNEXUS_DATA     lpData
     );
 
+ #ifdef __cplusplus
+ }
+ #endif 
 
 #endif

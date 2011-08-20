@@ -61,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="$(NEXUS)\dpcutil.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -176,7 +177,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\main.c"
+				RelativePath="..\..\mainCPP.cpp"
 				>
 			</File>
 			<File
@@ -202,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\duration.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\gendefs.h"
 				>
 			</File>
@@ -220,10 +225,6 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
-		<File
-			RelativePath="..\..\dpcutil.lib"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
