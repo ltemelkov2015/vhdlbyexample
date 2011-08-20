@@ -228,35 +228,6 @@ case MemState_reg is
 	     MemState_next<= stMemReady;
 end case;
 end process;
-
------------------------------------------------------------------
----- combinational option, not recomended it is not glitch free
-----------------------------------------------------------------
----- map those to the inputs
---signal tmem, trw: std_logic;
---
---process(AddressBusIn(3 downto 0), IOW, IOR)
---begin
---       if(AddressBusIn(3 downto 0) = "0100" and IOW='1') then
---		    --MemWrite;
---			 tmem='1';
---			 trw='0';
---		 elsif(AddressBusIn(3 downto 0) = "0011" and IOR='1') then
---		    --MemRead;
---			 tmem='1';
---			 trw='1';
---		 --elsif (AddressBusIn(3 downto 0) = "0100" and IOR='1') then
---		    --read internally reg 4
---			  --tmem='0';
---			  --trw='0';
---		 else
---		     tmem='0';
---			  trw='0';  
---       end if;
---end process;
-
-
-
 end arch_top;
    
 

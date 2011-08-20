@@ -17,6 +17,11 @@
 -- Revision 0.01 - File Created
 -- Additional Comments: 
 -- Moved ctrlDataWriteTick to state A(one state ahead)
+-- Rev.n49
+--Additeional Comments: 
+-- rev.n48 is still flaky. getting and setting registers fail when loop mode.
+-- most likely glitch in the next state logic
+-- Rev 49. removes posible glitches in next state logic 
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -51,33 +56,47 @@ end EppController;
 
 
 architecture Behavioral of EppController is
-type state_type is(stEppReady, 
-                   stEppAdrWriteA,
-                   stEppAdrWriteB,
-                   stEppAdrWriteC,						 
-						 stEppAdrReadA,
-                   stEppAdrReadB,
-                   stEppAdrReadC,             
-                   stEppDataWriteA,
- 						 stEppDataWriteB,
-						 stEppDataWriteC,
-						 stEppDataReadA,
-						 stEppDataReadB,
-						 stEppDataReadC
-                  );
+
+-- glitch free next state logic
+-- first four bytes are next state indetificators, the other five are next state controls
+--****************************************************************************************
+-- bit0 -> ctrlDataWr_next
+-- bit1 -> ctrlDataRd_next
+-- bit2 -> pwait_next
+-- bit3 -> ctrlAdr_next
+-- bit4 -> ctrlDir_next
+
+-- States
+constant stEppReady:      std_logic_vector(8 downto 0):= "0000" & "00000"; 
+constant stEppAdrWriteA:  std_logic_vector(8 downto 0):= "0001" & "00000";
+constant stEppAdrWriteB:  std_logic_vector(8 downto 0):= "0010" & "01000";
+constant stEppAdrWriteC:  std_logic_vector(8 downto 0):= "0011" & "00100"; 
+constant stEppAdrReadA:   std_logic_vector(8 downto 0):= "0100" & "10000";
+constant stEppAdrReadB:   std_logic_vector(8 downto 0):= "0101" & "10000";
+constant stEppAdrReadC:   std_logic_vector(8 downto 0):= "0110" & "10100";
+constant stEppDataWriteA: std_logic_vector(8 downto 0):= "0111" & "00001";
+constant stEppDataWriteB: std_logic_vector(8 downto 0):= "1000" & "00000";
+constant stEppDataWriteC: std_logic_vector(8 downto 0):= "1001" & "00100";
+constant stEppDataReadA:  std_logic_vector(8 downto 0):= "1010" & "10010";
+constant stEppDataReadB:  std_logic_vector(8 downto 0):= "1011" & "10000";
+constant stEppDataReadC:  std_logic_vector(8 downto 0):= "1100" & "10100";
+--
 
 
-signal state_reg, state_next: state_type;	  
+
+signal state_reg:  std_logic_vector(8 downto 0):= stEppReady;
+signal state_next: std_logic_vector(8 downto 0);  
+
 signal Adr_reg, Adr_next: std_logic_vector(3 downto 0);
-signal ctrlDir_reg, ctrlDir_next: std_logic;
-signal ctrlAdr_reg, ctrlAdr_next: std_logic;
+signal ctrlDir_reg: std_logic;
+signal ctrlAdr_reg: std_logic;
 signal ctrlAdrStb: std_logic;
 signal ctrlWriteStb: std_logic;
 signal ctrlDataStb: std_logic;
 signal BusEppIn, BusEppOut,BusEppData: std_logic_vector(7 downto 0);
-signal pwait_reg, pwait_next: std_logic;
-signal ctrlDataWr_reg, ctrlDataWr_next: std_logic;
-signal ctrlDataRd_reg, ctrlDataRd_next: std_logic;
+signal pwait_reg: std_logic;
+signal ctrlDataWr_reg: std_logic;
+signal ctrlDataRd_reg: std_logic;
 signal ctrlReady: std_logic;
 
 
@@ -107,25 +126,22 @@ busEppData<=EppDataBusIn;
 Adr_next <= pdb(3 downto 0) when ctrlAdr_reg='1' else Adr_reg;
 
 
+	-- Map control signals from the current state
+	ctrlDataWr_reg  <= state_reg(0);
+	ctrlDataRd_reg  <= state_reg(1);
+	pwait_reg       <= state_reg(2);
+	ctrlAdr_reg     <= state_reg(3);
+	ctrlDir_reg     <= state_reg(4);
+
 
 process(mclk, reset)
 begin
  if(reset='1') then
     state_reg <=stEppReady;
     Adr_reg<=(others=>'0');
-	 ctrlAdr_reg<='0';
-	 ctrlDir_reg<='0';
-	 pwait_reg<='0';
-	 ctrlDataWr_reg<='0';
-	 ctrlDataRd_reg<='0';
   elsif(mclk'event and mclk='1') then
     state_reg <=state_next;
     Adr_reg<= Adr_next;
-	 ctrlAdr_reg<=ctrlAdr_next;
-	 ctrlDir_reg<=ctrlDir_next;
-	 pwait_reg<=pwait_next;
-	 ctrlDataWr_reg<=ctrlDataWr_next;
-	 ctrlDataRd_reg<=ctrlDataRd_next;
   end if;
 end process; 
 	
@@ -153,16 +169,20 @@ case state_reg is
   	--Write Address Register States			
 	when stEppAdrWriteA  =>
 			      state_next <= stEppAdrWriteB;
-
-	when stEppAdrWriteB =>
-					state_next <= stEppAdrWriteC;
 					
-   when stEppAdrWriteC =>
+	when stEppAdrWriteB =>
+	            state_next <= stEppAdrWriteC;
+					
+	when stEppAdrWriteC =>
 					if ctrlAdrStb = '0' then
 						state_next <= stEppAdrWriteC;
 					else
 						state_next <= stEppReady;
 					end if;		
+
+   
+	            
+                
 
 	--Read Address Register States			
 	when stEppAdrReadA =>
@@ -183,8 +203,14 @@ case state_reg is
 	-- Write data register states
 	 when stEppDataWriteA =>
 			state_next <= stEppDataWriteB;
+			
     when stEppDataWriteB=>
-			state_next <= stEppDataWriteC;
+	      if(ctrlReady='1') then
+			   state_next <= stEppDataWriteC;
+			 else
+			   state_next <= stEppDataWriteB;
+		    end if;
+		
     when stEppDataWriteC =>
 		if ctrlDataStb = '0' then
 			state_next <= stEppDataWriteC;
@@ -193,11 +219,21 @@ case state_reg is
 		end if;
 
 
+
+
+
 	-- Read data register
 	 when stEppDataReadA =>
 			state_next <= stEppDataReadB;
+			
 	 when stEppDataReadB =>
-			state_next <= stEppDataReadC;
+			if(ctrlReady='1') then
+			   state_next <= stEppDataReadC;
+			 else
+			   state_next <= stEppDataReadB;
+			 end if;
+			
+			
 	 when stEppDataReadC =>
 		if ctrlDataStb = '0' then
 			state_next <= stEppDataReadC;
@@ -211,76 +247,5 @@ case state_reg is
      end case;
 end process;   
 
-
-
--------------------------------------------------------------
--- look ahead buffers. Those sre control signals to datapath
--------------------------------------------------------------
-process(state_next, ctrlReady)
-begin
-ctrlDataWr_next <='0'; --default outputs
-ctrlDataRd_next <='0';
-pwait_next<='0';
-ctrlAdr_next<='0';
-ctrlDir_next<='0';
-
-case state_next is
-
--- Idle
-when stEppReady=>
-
--- Address Register Write
-when stEppAdrWriteA=>
-when stEppAdrWriteB=>
-     ctrlAdr_next<='1';
-when stEppAdrWriteC=> 
- if(ctrlReady='1') then 
-    pwait_next<='1'; 
- else 
-    pwait_next<='0'; --default
- end if;
-
- 
---DataRegister write  
-when stEppDataWriteA=>
-     ctrlDataWr_next<='1';
-when stEppDataWriteB=>
-when stEppDataWriteC=>
-if(ctrlReady='1') then 
-    pwait_next<='1'; 
- else 
-    pwait_next<='0'; 
- end if;
-    	  
---Data register read
-when stEppDataReadA=>
-     ctrlDir_next<='1';
-	  ctrlDataRd_next <='1';
-when stEppDataReadB=>
-     --ctrlDataRd_next <='1';
-     ctrlDir_next<='1';
-when stEppDataReadC=>
-     ctrlDir_next<='1';
-	  if(ctrlReady='1') then 
-        pwait_next<='1'; 
-     else 
-        pwait_next<='0'; 
-     end if;
-     
---Address register read
-when stEppAdrReadA=>
-     ctrlDir_next<='1';
-when stEppAdrReadB=>
-     ctrlDir_next<='1';
-when stEppAdrReadC=>
-     ctrlDir_next<='1';
-	     if(ctrlReady='1') then 
-           pwait_next<='1'; 
-        else 
-           pwait_next<='0'; --default
-        end if;
-    
-end case;
-end process;
 end Behavioral;
 
