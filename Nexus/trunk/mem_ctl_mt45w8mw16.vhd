@@ -150,7 +150,7 @@ end process;
 --------------------------------------------------------------
 -- look-ahead output logic
 --------------------------------------------------------------
-process(state_next)
+process(state_next, lb_reg, ub_reg, lb_en, ub_en)
 begin
 
 tri_buf <='1'; --defaults

@@ -72,15 +72,12 @@ signal MemControlReg, MemControlnext: unsigned(7 downto 0);  --read/write
 
 -- future use, status register that is updated from inside the controller
 -- and read only from Epp IO,
-signal MemStatusReg, MemStatusnext:   unsigned(7 downto 0);  
+ 
 ----------------------------------------------------------------------------
 
 signal AddressBusEpp:        std_logic_vector(22 downto 0); 
 signal DataBusEpp:           std_logic_vector(15 downto 0);
-signal tDataEpp:             std_logic_vector(15 downto 0);
 signal tDataEpp_r:           std_logic_vector(15 downto 0);
-signal tDataEpp_ur:          std_logic_vector(7 downto 0);
-signal ctrl_mem, trw:        std_logic;
 signal CntrTick0, CntrTick1: std_logic;
 
 -- state for generating mem and rw  tick
@@ -148,7 +145,6 @@ if reset='1' then
  DataReg0 <=(others=>'0');
  DataReg1 <=(others=>'0');
  MemControlReg <=(others=>'0');
- MemStatusReg <=(others=>'0');
 elsif(mclk'event and mclk='1') then
  AddrReg0 <= AddrReg0next;
  AddrReg1 <= AddrReg1next;
@@ -156,7 +152,6 @@ elsif(mclk'event and mclk='1') then
  DataReg0 <= DataReg0next;
  DataReg1 <= DataReg1next;
  MemControlReg <= MemControlnext;
- MemStatusReg <= MemStatusnext;
 end if;
 end process;
 
