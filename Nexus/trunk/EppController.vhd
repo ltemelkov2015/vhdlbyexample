@@ -22,17 +22,15 @@
 -- rev.n48 is still flaky. getting and setting registers fail when loop mode.
 -- most likely glitch in the next state logic
 -- Rev 49. removes posible glitches in next state logic 
+-- 08/22/2011 Added an extra Data read/ Write state named "D". The reason for that is 
+-- we need and extra delay cycle for the "Ready" signal originating from 
+-- mem_ctl_mt45w8mw16 module, so that "wait" signal starts at the end
+-- of the data transfer to SRAM
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity EppController is
   Port (
@@ -57,16 +55,6 @@ end EppController;
 
 architecture Behavioral of EppController is
 
--- glitch free next state logic
--- first four bytes are next state indetificators, the other five are next state controls
---****************************************************************************************
--- bit0 -> ctrlDataWr_next
--- bit1 -> ctrlDataRd_next
--- bit2 -> pwait_next
--- bit3 -> ctrlAdr_next
--- bit4 -> ctrlDir_next
-
--- States
 constant stEppReady:      std_logic_vector(8 downto 0):= "0000" & "00000"; 
 constant stEppAdrWriteA:  std_logic_vector(8 downto 0):= "0001" & "00000";
 constant stEppAdrWriteB:  std_logic_vector(8 downto 0):= "0010" & "01000";
@@ -74,13 +62,19 @@ constant stEppAdrWriteC:  std_logic_vector(8 downto 0):= "0011" & "00100";
 constant stEppAdrReadA:   std_logic_vector(8 downto 0):= "0100" & "10000";
 constant stEppAdrReadB:   std_logic_vector(8 downto 0):= "0101" & "10000";
 constant stEppAdrReadC:   std_logic_vector(8 downto 0):= "0110" & "10100";
+
 constant stEppDataWriteA: std_logic_vector(8 downto 0):= "0111" & "00001";
 constant stEppDataWriteB: std_logic_vector(8 downto 0):= "1000" & "00000";
-constant stEppDataWriteC: std_logic_vector(8 downto 0):= "1001" & "00100";
-constant stEppDataReadA:  std_logic_vector(8 downto 0):= "1010" & "10010";
-constant stEppDataReadB:  std_logic_vector(8 downto 0):= "1011" & "10000";
-constant stEppDataReadC:  std_logic_vector(8 downto 0):= "1100" & "10100";
---
+constant stEppDataWriteC: std_logic_vector(8 downto 0):= "1001" & "00000"; --wait cycle
+constant stEppDataWriteD: std_logic_vector(8 downto 0):= "1010" & "00100";
+
+
+constant stEppDataReadA:  std_logic_vector(8 downto 0):= "1011" & "10010";
+constant stEppDataReadB:  std_logic_vector(8 downto 0):= "1100" & "10000";
+constant stEppDataReadC:  std_logic_vector(8 downto 0):= "1101" & "10000"; --wait cycle
+constant stEppDataReadD:  std_logic_vector(8 downto 0):= "1110" & "10100";
+
+ 
 
 
 
@@ -198,25 +192,29 @@ case state_reg is
 		    state_next <= stEppReady;
 		 end if;
 
+--Write data registers
+when stEppDataWriteA =>
+     state_next <= stEppDataWriteB;
 
-
-	-- Write data register states
-	 when stEppDataWriteA =>
-			state_next <= stEppDataWriteB;
-			
-    when stEppDataWriteB=>
+when stEppDataWriteB=>
+	     state_next <= stEppDataWriteC;
+		  
+		  
+	 when stEppDataWriteC=>
 	      if(ctrlReady='1') then
-			   state_next <= stEppDataWriteC;
+			   state_next <= stEppDataWriteD;
 			 else
-			   state_next <= stEppDataWriteB;
+			   state_next <= stEppDataWriteC;
 		    end if;
 		
-    when stEppDataWriteC =>
+    when stEppDataWriteD =>
 		if ctrlDataStb = '0' then
-			state_next <= stEppDataWriteC;
+			state_next <= stEppDataWriteD;
 		else
  			state_next <= stEppReady;
 		end if;
+
+
 
 
 
@@ -227,19 +225,23 @@ case state_reg is
 			state_next <= stEppDataReadB;
 			
 	 when stEppDataReadB =>
-			if(ctrlReady='1') then
-			   state_next <= stEppDataReadC;
+	      state_next <= stEppDataReadC;
+			
+	when stEppDataReadC=>
+	    if(ctrlReady='1') then
+			   state_next <= stEppDataReadD;
 			 else
-			   state_next <= stEppDataReadB;
+			   state_next <= stEppDataReadC;
 			 end if;
 			
 			
-	 when stEppDataReadC =>
+	 when stEppDataReadD =>
 		if ctrlDataStb = '0' then
-			state_next <= stEppDataReadC;
+			state_next <= stEppDataReadD;
 		else
 			state_next <= stEppReady;
 		end if;
+
 
 	-- Some unknown state				
 	  when others =>

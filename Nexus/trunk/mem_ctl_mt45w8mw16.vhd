@@ -20,7 +20,7 @@
 -- Revision: 
 -- Revision 0.01 - File Created
 -- Additional Comments: 
---
+-- 21/8/2011 replaced the look ahead logic with glitch free states 08/22/2011
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -59,19 +59,47 @@ end mem_ctl_mt45w8mw16;
 
 
 architecture arch of mem_ctl_mt45w8mw16 is
+--GLITCH FREE STATES
+--bit0 -> tri <='1'; --defaults
+--bit1 -> we  <='1';
+--bit2 -> oe  <='1';
+--bit3 -> adv <='1';
+--bit4 -> ready <='1' i.e idle
 
-type state_type is(idle, rd1, rd2, rd3, rd4, rd5, wr1, wr2, wr3, wr4);
-signal state_reg, state_next: state_type;
+constant idle: std_logic_vector(8 downto 0):= "0000" & "11111"; 
+constant rd1:  std_logic_vector(8 downto 0):= "0001" & "00011";
+constant rd2:  std_logic_vector(8 downto 0):= "0010" & "01011";
+constant rd3:  std_logic_vector(8 downto 0):= "0011" & "01011";
+constant rd4:  std_logic_vector(8 downto 0):= "0100" & "01011";
+
+constant wr1:  std_logic_vector(8 downto 0):= "0110" & "00100";
+constant wr2:  std_logic_vector(8 downto 0):= "0111" & "00100";
+constant wr3:  std_logic_vector(8 downto 0):= "1000" & "00100";
+constant wr4:  std_logic_vector(8 downto 0):= "1001" & "00110";
+
+signal state_reg:  std_logic_vector(8 downto 0):=idle;
+signal state_next: std_logic_vector(8 downto 0);
+
+
 signal data_f2s_reg, data_f2s_next: std_logic_vector(15 downto 0);
 signal data_s2f_reg, data_s2f_next: std_logic_vector(15 downto 0);
 signal addr_reg, addr_next: std_logic_vector(22 downto 0);
-signal we_buf, oe_buf, tri_buf, adv_buf, lb_buf, ub_buf: std_logic;
-signal we_reg, oe_reg, tri_reg, adv_reg, lb_reg, ub_reg: std_logic; 
+signal we_reg, oe_reg, tri_reg, adv_reg: std_logic; 
 
 
  
 begin
---state and data registers
+-- signal map
+tri_reg <= state_reg(0);
+we_reg  <= state_reg(1);
+oe_reg  <= state_reg(2);
+adv_reg <= state_reg(3);
+ready   <= state_reg(4);
+
+--passthru
+lb_n <=lb_en;
+ub_n <=ub_en;
+
 process(clk, reset)
 begin
 if(reset='1') then
@@ -79,23 +107,11 @@ if(reset='1') then
  data_f2s_reg <=(others=> '0');
  data_s2f_reg <=(others=> '0');
  addr_reg <= (others =>'0');
- we_reg <='1';
- oe_reg <='1';
- tri_reg <='1';
- adv_reg <='1';
- lb_reg <='1';
- ub_reg<='1';
 elsif(clk'event and clk='1') then
  state_reg <= state_next;
  data_f2s_reg <= data_f2s_next;
  data_s2f_reg <= data_s2f_next;
  addr_reg <= addr_next;
- we_reg <=we_buf;
- oe_reg <=oe_buf;
- tri_reg <= tri_buf;
- adv_reg <= adv_buf;
- lb_reg <=lb_buf;
- ub_reg <= ub_buf;
 end if;
 end process;
 
@@ -107,7 +123,7 @@ begin
 addr_next<=addr_reg;  -- default
 data_f2s_next <= data_f2s_reg;
 data_s2f_next <= data_s2f_reg;
---ready <='1';
+
 
 case state_reg is
   when idle=>
@@ -116,14 +132,14 @@ case state_reg is
     else
       addr_next<=addr;
 		
-        if rw='0' then -- write
-          state_next <=wr1;
-          data_f2s_next <=data_f2s;
-        else --read
-          state_next <=rd1;
-        end if;
-     end if;
---ready <='1';
+      if rw='0' then -- write
+         state_next <=wr1;
+         data_f2s_next <=data_f2s;
+      else --read
+         state_next <=rd1;
+      end if;
+    end if;
+
 
   when rd1=>
     state_next <=rd2;
@@ -133,9 +149,10 @@ case state_reg is
     state_next <=rd4;
   when rd4=>
     data_s2f_next <= dio;
-	 state_next <= rd5;
-  when rd5=>
-    state_next <=idle;
+	 state_next <=idle;
+
+	 
+	 
   when wr1=>
     state_next <=wr2;
   when wr2=>
@@ -144,58 +161,12 @@ case state_reg is
     state_next <=wr4;
   when wr4=>
     state_next <=idle;
+	 
+  when others=>
+    state_next <=idle;
 end case;
 end process;
      
---------------------------------------------------------------
--- look-ahead output logic
---------------------------------------------------------------
-process(state_next, lb_reg, ub_reg, lb_en, ub_en)
-begin
-
-tri_buf <='1'; --defaults
-we_buf  <='1';
-oe_buf  <='1';
-adv_buf <='1';
-lb_buf <= lb_reg;
-ub_buf <= ub_reg;
-ready<='0'; --unregistered signal
-
-
-case state_next is
-  when idle=>
-   ready <='1';
-  when rd1=> 
-      lb_buf<=lb_en;
-      ub_buf<=ub_en;		
-      adv_buf <='0'; 
-      oe_buf  <='0';
-  when rd2=> 
-      oe_buf  <='0';
-  when rd3=>
-      oe_buf  <='0';
-  when rd4=>
-      oe_buf  <='0';
-  when rd5=>
-  when wr1=>
-        lb_buf<=lb_en;
-        ub_buf<=ub_en;	
-        tri_buf <='0';
-		  adv_buf <='0';
-		  we_buf  <='0';
-  when wr2=>
-      tri_buf <='0';
-		adv_buf <='0';
-		we_buf  <='0';
-	when wr3=>
-	   tri_buf <='0';
-		adv_buf <='0';
-		we_buf  <='0';
-	when wr4=>
-	   tri_buf <='0';
-		adv_buf <='0';
-end case;
-end process;
 
 -- to main system
 data_s2f_r  <= data_s2f_reg;
@@ -207,8 +178,7 @@ we_n <=we_reg;
 oe_n<=oe_reg;
 s_addr <=addr_reg;
 adv_n<=adv_reg;
-lb_n <=lb_reg;
-ub_n <=ub_reg;
+
 
 --i/o for sram chip
 ce_n <='0';
@@ -216,6 +186,5 @@ sclk <='0';
 cre <='0';
 dio <= data_f2s_reg when tri_reg='0' else (others=>'Z');
 
-
-
 end arch;
+
