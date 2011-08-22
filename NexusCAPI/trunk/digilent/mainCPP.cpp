@@ -23,6 +23,7 @@ lpNexusDeviceInfo *pDeviceInfo=NULL;
 LPNEXUS_DATA pDataSet = NULL;
 LPNEXUS_DATA pDataGet = NULL;
 BOOL st;
+BOOL keeprunning = fTrue;
 CDuration cd;
 
 
@@ -36,9 +37,6 @@ if(!Nexus_InitApp(&erc))
 //run this only once to setup devices
 //Nexus_DeviceTableConfig(NULL,&erc);
 
-
-
-     
 
 //Discover the Nexus devises
   numdevices = NexusDeviceFactory_DiscoverDevices(&pDeviceInfo, &erc);
@@ -58,7 +56,6 @@ if(!Nexus_InitApp(&erc))
 	}
 
 
-
 /******* Set/Get Config register *****************************************************/
 pDataSet = Nexus_AllocateData(1);
 if(pDataSet==NULL) 
@@ -76,14 +73,13 @@ if(pDataGet==NULL)
   return 1;
   }
 
-
 _tprintf(_T("--------------------------------------------\n"));
-_tprintf(_T("TESTING READING WRITING CONFIG REGISTER \n"));
+_tprintf(_T("TESTING READING WRITING CONFIG REGISTER    *\n"));
 _tprintf(_T("--------------------------------------------\n"));
 
 pDataSet->data[0]=0x05;
-cd.Start();
-for(iy=0; iy<10; iy++)
+//cd.Start();
+for(iy=0; iy<10000; iy++)
 {
 //assuming only one Nexus device with index 0 found
 if(Nexus_SetConfigReg(pDeviceInfo[0], &erc, NULL, pDataSet)) //synch/blocking call
@@ -91,29 +87,28 @@ if(Nexus_SetConfigReg(pDeviceInfo[0], &erc, NULL, pDataSet)) //synch/blocking ca
 	
        if(!Nexus_GetConfigReg(pDeviceInfo[0],&erc,NULL,pDataGet))
 	   {
-          _tprintf(_T("Failure Getting the CONFIG_REG %s \n"), Nexus_GetStatus(erc));
+		   _tprintf(_T("Failure Getting the CONFIG_REG %s at Ix: %d \n"), Nexus_GetStatus(erc), iy);
 		  break;
 	   }
        else
          {
-          _tprintf(_T("Success Getting the CONFIG_REG with value %x \n"), pDataGet->data[0]);
+			 _tprintf(_T("Success Getting the CONFIG_REG with value %x at Ix: %d \r"), pDataGet->data[0], iy);
 	      if(pDataGet->data[0] != pDataSet->data[0])
 	        {
-		      _tprintf(_T("Failure: Success Getting the CONFIG_REG but data values are different \n"));
+				_tprintf(_T("Failure: Success Getting the CONFIG_REG but data values different at Ix: %d \n"), iy);
 			  break;
 	        }
-         }
-	
+         }	
 }
 else
 {
-      _tprintf(_T("Failure Setting the CONFIG_REG %s \n"), Nexus_GetStatus(erc)); 
+	_tprintf(_T("Failure Setting the CONFIG_REG %s at Ix: %d \n"), Nexus_GetStatus(erc), iy); 
 	  break;
 }
 
 //_tprintf(_T("Iteration number: %d \n"), iy);
 }
-cd.Stop();
+//cd.Stop();
 _tprintf(_T("Number of Iterations: %d , execeuted for %f sec.\n"), iy, (cd.GetDuration())/1e6);
 
 //Clean up
@@ -123,7 +118,7 @@ Nexus_FreeData(pDataGet);
 
 /**********************************************************************/
 _tprintf(_T("------------------------------------------------\n"));
-_tprintf(_T("TESTING READING WRITING NEXUS ADDRESS REGISTERS \n"));
+_tprintf(_T("TESTING READING WRITING NEXUS ADDRESS REGISTERS*\n"));
 _tprintf(_T("------------------------------------------------\n"));
 /********************************************************************/
 //Allocate memory
@@ -148,15 +143,16 @@ pDataSet->data[0]=0x01;
 pDataSet->data[1]=0x02;
 pDataSet->data[2]=0x03;
 
-cd.Start();
-for(iy=0; iy<10; iy++)
-{
+//cd.Start();
  if(!Nexus_SetAddressRegs(pDeviceInfo[0], &erc, NULL, pDataSet))
    {
      _tprintf(_T("Failure Setting THE ADDR_REG %s \n"), Nexus_GetStatus(erc)); 
-     break;
+     //break;
+	 goto lCleanup;
    }
-
+for(iy=0; iy<10000 && keeprunning; iy++)
+{
+ memset(pDataGet->data,0,3*sizeof(BYTE));
  if(!Nexus_GetAddressRegs(pDeviceInfo[0], pDataGet, &erc, NULL))
 	 {
      _tprintf(_T("Failure GETTING THE ADDR_REG %s \n"), Nexus_GetStatus(erc)); 
@@ -164,27 +160,17 @@ for(iy=0; iy<10; iy++)
    }
  for(iz=0; iz<3; iz++)
  {
-  if(iz==2)
-  {
-    if((pDataGet->data[iz] & 0x3F)!=pDataSet->data[iz])
+  if(pDataGet->data[iz]!=pDataSet->data[iz])
 	  {
-           _tprintf(_T("Failure Address Data with index %d mismatch\n"),iz);
-		  break;
-	  }
-  }
-  else
-  {
-	  if(pDataGet->data[iz]!=pDataSet->data[iz])
-	  {
-           _tprintf(_T("Failure Address Data with index %d mismatch\n"),iz);
-		  break;
-	  }
-  }
+           _tprintf(_T("Failure Address Data with index %d ,  Set %x , Get %x \n"), \
+			           iz,pDataSet->data[iz], pDataGet->data[iz]);
+		  keeprunning=fFalse;
+	  } 
 
  }
-_tprintf(_T("Iteration number: %d \n"), iy);
+_tprintf(_T("Iteration number: %d   OK \r"), iy);
 }
-cd.Stop();
+//cd.Stop();
 _tprintf(_T("Number of Iterations: %d , execeuted for %f sec.\n"), iy, (cd.GetDuration())/1e6);
 
 

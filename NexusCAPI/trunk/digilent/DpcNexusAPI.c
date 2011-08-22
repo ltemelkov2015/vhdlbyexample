@@ -1,5 +1,6 @@
 /*
  * DpcNexusAPI.c
+ * Added memset function to Nexus_AllocateData() Api: 08/22/2011
  */
 
 #include <windows.h>
@@ -396,12 +397,13 @@ if (size < 0)
 lpData = (LPNEXUS_DATA )malloc(sizeof(NEXUS_DATA));
 if(lpData==NULL)
    return NULL;
-   
+memset(lpData,0,sizeof(NEXUS_DATA)); 
 lpData->data = (BYTE *)malloc(size*sizeof(BYTE));
   if (lpData->data==NULL)
       goto failure;
   else
   {
+	  memset(lpData->data, 0, size*sizeof(BYTE));
 	  lpData->size = size;
 	  return lpData;
   }
